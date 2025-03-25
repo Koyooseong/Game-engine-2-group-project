@@ -2,9 +2,6 @@ using Game;
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// 연료 게이지(CurrentHP)의 Width를 시간에 따라 줄이며, 남은 연료를 시각화합니다.
-/// </summary>
 public class FuelTimer : MonoBehaviour
 {
     #region Variables
@@ -20,6 +17,7 @@ public class FuelTimer : MonoBehaviour
     private RectTransform rectTransform;
     private float currentTime;
     private float originalWidth = GameConstants.FUEL_BAR_WIDTH;
+    private bool resultStarted = false;
 
     #endregion
 
@@ -39,11 +37,11 @@ public class FuelTimer : MonoBehaviour
     {
         if (currentTime <= 0f)
         {
-            if (!resultUI.gameObject.activeSelf)
+            if (!resultStarted)
             {
-                StartCoroutine(DelayShowResult()); // 한 프레임 딜레이로 Result 호출
+                resultStarted = true;
+                StartCoroutine(DelayShowResult());
             }
-
             return;
         }
 
@@ -82,6 +80,14 @@ public class FuelTimer : MonoBehaviour
     private System.Collections.IEnumerator DelayShowResult()
     {
         yield return null;
+
+        if (resultUI == null)
+        {
+            Log.Error("FuelTimer에 ResultUI가 연결되지 않았습니다.", this);
+            yield break;
+        }
+
+        Log.System("연료 소진됨 → 결과 화면 표시", this);
         resultUI.Show();
     }
 

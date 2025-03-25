@@ -68,7 +68,9 @@ public class GamePauseManager : MonoBehaviour
     {
         if (isPaused) return;
 
-        foreach (var target in pauseTargets)
+        var targets = new List<IGamePause>(pauseTargets);
+
+        foreach (var target in targets)
         {
             target.Pause();
         }
@@ -83,7 +85,9 @@ public class GamePauseManager : MonoBehaviour
     {
         if (!isPaused) return;
 
-        foreach (var target in pauseTargets)
+        var targets = new List<IGamePause>(pauseTargets);
+
+        foreach (var target in targets)
         {
             target.Resume();
         }

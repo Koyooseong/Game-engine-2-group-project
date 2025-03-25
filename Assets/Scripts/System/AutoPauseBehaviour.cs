@@ -18,7 +18,7 @@ public abstract class AutoPauseBehaviour : MonoBehaviour, IGamePause
 #if UNITY_EDITOR
         else
         {
-            Debug.LogWarning($"[AutoPauseBehaviour] GamePauseManager가 초기화되지 않았습니다. ({gameObject.name})", this);
+            Log.Warn($"[AutoPauseBehaviour] GamePauseManager가 초기화되지 않았습니다. ({gameObject.name})", this);
         }
 #endif
     }

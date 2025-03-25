@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Game;
 
 public class TitleUI : MonoBehaviour
 {
@@ -15,6 +16,12 @@ public class TitleUI : MonoBehaviour
 
     private void Start()
     {
+        if (startButton == null)
+        {
+            Log.Error("TitleUI에 StartButton이 지정되지 않았습니다.", this);
+            return;
+        }
+
         startButton.onClick.AddListener(OnClickStart);
     }
 
@@ -27,7 +34,7 @@ public class TitleUI : MonoBehaviour
     /// </summary>
     private void OnClickStart()
     {
-        SceneLoader.LoadScene("GameScene");
+        SceneLoader.LoadScene(GameConstants.GAME_SCENE_NAME);
     }
 
     #endregion

@@ -9,5 +9,8 @@ namespace Game
         public const float DEFAULT_FUEL_TIME = 20f;
         public const float FUEL_BAR_WIDTH = 1080f;
         public const int EDITOR_INPUT_ID = -1;
+
+        public const string GAME_SCENE_NAME = "GameScene";
+        public const string TITLE_SCENE_NAME = "Title";
     }
 }

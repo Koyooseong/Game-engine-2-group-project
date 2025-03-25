@@ -1,8 +1,6 @@
+using Game;
 using UnityEngine;
 
-/// <summary>
-/// 탐사 종료 시 결과 패널을 활성화하고, 입력 시 Title 씬으로 전환합니다.
-/// </summary>
 public class ResultUI : MonoBehaviour
 {
     #region Variables
@@ -19,6 +17,12 @@ public class ResultUI : MonoBehaviour
 
     private void Start()
     {
+        if (resultPanel == null)
+        {
+            Log.Error("ResultUI에 resultPanel이 지정되지 않았습니다.", this);
+            return;
+        }
+
         resultPanel.SetActive(false);
     }
 
@@ -48,8 +52,15 @@ public class ResultUI : MonoBehaviour
     /// </summary>
     public void Show()
     {
+        if (resultPanel == null)
+        {
+            Log.Error("ResultUI에 resultPanel이 지정되지 않았습니다.", this);
+            return;
+        }
+
         resultPanel.SetActive(true);
         isResultActive = true;
+
         if (GamePauseManager.Instance == null)
         {
             Log.Error("GamePauseManager가 초기화되지 않았습니다!", this);
@@ -69,7 +80,7 @@ public class ResultUI : MonoBehaviour
     private void LoadTitle()
     {
         isResultActive = false;
-        SceneLoader.LoadScene("Title");
+        SceneLoader.LoadScene(GameConstants.TITLE_SCENE_NAME);
     }
 
     #endregion

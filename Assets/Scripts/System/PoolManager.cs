@@ -1,9 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Game;
 
-/// <summary>
-/// 재사용 가능한 오브젝트 풀을 관리하는 클래스입니다.
-/// </summary>
 public class PoolManager : MonoBehaviour
 {
     #region Variables
@@ -11,10 +9,10 @@ public class PoolManager : MonoBehaviour
     [Header("풀 오브젝트")]
     [SerializeField] private GameObject prefab;
 
-    [Header("풀 초기 크기")]
+    [Header("초기 풀 사이즈")]
     [SerializeField] private int initialSize = 10;
 
-    private Queue<GameObject> pool = new Queue<GameObject>();
+    private readonly Queue<GameObject> poolQueue = new Queue<GameObject>();
 
     #endregion
 
@@ -22,11 +20,17 @@ public class PoolManager : MonoBehaviour
 
     private void Awake()
     {
+        if (prefab == null)
+        {
+            Log.Error("PoolManager의 프리팹이 지정되지 않았습니다.", this);
+            return;
+        }
+
         for (int i = 0; i < initialSize; i++)
         {
             GameObject obj = Instantiate(prefab, transform);
             obj.SetActive(false);
-            pool.Enqueue(obj);
+            poolQueue.Enqueue(obj);
         }
     }
 
@@ -35,29 +39,33 @@ public class PoolManager : MonoBehaviour
     #region Custom Methods
 
     /// <summary>
-    /// 풀에서 오브젝트를 가져옵니다.
+    /// 풀에서 오브젝트를 꺼내 활성화합니다. 부족하면 새로 생성합니다.
     /// </summary>
     public GameObject Get()
     {
-        if (pool.Count == 0)
+        GameObject obj;
+
+        if (poolQueue.Count > 0)
         {
-            GameObject obj = Instantiate(prefab, transform);
-            obj.SetActive(false);
-            pool.Enqueue(obj);
+            obj = poolQueue.Dequeue();
+        }
+        else
+        {
+            obj = Instantiate(prefab, transform);
+            Log.Warn("풀 부족으로 새 오브젝트 생성됨", this);
         }
 
-        GameObject instance = pool.Dequeue();
-        instance.SetActive(true);
-        return instance;
+        obj.SetActive(true);
+        return obj;
     }
 
     /// <summary>
-    /// 오브젝트를 풀로 되돌립니다.
+    /// 오브젝트를 비활성화하고 풀에 반환합니다.
     /// </summary>
     public void Return(GameObject obj)
     {
         obj.SetActive(false);
-        pool.Enqueue(obj);
+        poolQueue.Enqueue(obj);
     }
 
     #endregion

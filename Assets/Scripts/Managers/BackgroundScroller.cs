@@ -31,8 +31,12 @@ public class BackgroundScroller : AutoPauseBehaviour
 
     private void Update()
     {
+        if (backgrounds == null || backgrounds.Length == 0) return;
+
         foreach (Transform bg in backgrounds)
         {
+            if (bg == null) continue; // 실수로 삭제되었을 경우 안전하게 스킵
+
             bg.Translate(Vector3.down * scrollSpeed * Time.deltaTime);
 
             if (bg.position.y <= resetY)
