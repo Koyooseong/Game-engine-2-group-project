@@ -56,6 +56,10 @@ public class SubmarineController : MonoBehaviour
 
         Vector2 move = currentInput.normalized * moveSpeed;
         rb.linearVelocity = move;
+
+        //Z축 회전 추가
+        float angle = Mathf.Atan2(currentInput.y, currentInput.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0f, 0f, angle - 90f);
     }
     #endregion
 }
