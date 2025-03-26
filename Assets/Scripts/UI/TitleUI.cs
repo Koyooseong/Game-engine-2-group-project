@@ -19,7 +19,7 @@ public class TitleUI : MonoBehaviour
     [Tooltip("누르면 씬 이동합니다")]
     [SerializeField] private Button yesButton;
     
-    [Header("탐사 시작 확인 팝업 취소 버튼)]
+    [Header("탐사 시작 확인 팝업 취소 버튼")]
     [Tooltip("누르면 창이 꺼집니다")]
     [SerializeField] private Button noButton;
 
