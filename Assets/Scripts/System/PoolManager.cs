@@ -18,7 +18,7 @@ public class PoolManager : MonoBehaviour
 
     #region Unity Methods
 
-    private void Awake()
+    /*private void Awake()
     {
         if (prefab == null)
         {
@@ -32,7 +32,7 @@ public class PoolManager : MonoBehaviour
             obj.SetActive(false);
             poolQueue.Enqueue(obj);
         }
-    }
+    }*/
 
     #endregion
 
@@ -67,6 +67,20 @@ public class PoolManager : MonoBehaviour
         obj.SetActive(false);
         poolQueue.Enqueue(obj);
     }
+
+    public void Initialize(GameObject prefab, int initialSize)
+    {
+        this.prefab = prefab;
+        this.initialSize = initialSize;
+
+        for (int i = 0; i < initialSize; i++)
+        {
+            GameObject obj = Instantiate(prefab, transform);
+            obj.SetActive(false);
+            poolQueue.Enqueue(obj);
+        }
+    }
+
 
     #endregion
 }
