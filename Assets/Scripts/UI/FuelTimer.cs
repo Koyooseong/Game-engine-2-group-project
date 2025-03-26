@@ -14,6 +14,11 @@ public class FuelTimer : MonoBehaviour
     [Tooltip("결과화면 스크립트 연결하면 됩니다.")]
     [SerializeField] private ResultUI resultUI;
 
+
+    [Header("깊이 측정 스크립트")]
+    [SerializeField] private DepthMarker depthMarker;
+
+
     private RectTransform rectTransform;
     private float currentTime;
     private float originalWidth = GameConstants.FUEL_BAR_WIDTH;
@@ -80,6 +85,19 @@ public class FuelTimer : MonoBehaviour
     private System.Collections.IEnumerator DelayShowResult()
     {
         yield return null;
+
+        // depth측정을 멈춥니다.
+        if (depthMarker != null)
+        {
+            depthMarker.StopTracking();
+        }
+        else
+        {
+            Log.Warn("FuelTimer에 DepthMarker가 연결되지 않았습니다!", this);
+        }
+
+
+
 
         if (resultUI == null)
         {
