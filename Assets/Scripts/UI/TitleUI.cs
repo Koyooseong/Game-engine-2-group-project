@@ -6,13 +6,13 @@ public class TitleUI : MonoBehaviour
 {
     #region Variables
 
-    [Header("시작 버튼")]
-    [Tooltip("게임을 시작하는 버튼입니다.")]
+    [Header("탐사 시작 버튼")]
+    [Tooltip("탐사를 시작하는 버튼입니다.")]
     [SerializeField] private Button startButton;
 
 
-    [Header("게임 시작 확인 팝업")]
-    [Tooltip("게임 시작 버튼을 눌렀을 때 나오는 팝업창입니다.")]
+    [Header("탐사 시작 확인 팝업")]
+    [Tooltip("탐사 시작 버튼을 눌렀을 때 나오는 팝업창입니다.")]
     [SerializeField] private GameObject gameStart_YesNo;
 
     [SerializeField] private Button yesButton;
