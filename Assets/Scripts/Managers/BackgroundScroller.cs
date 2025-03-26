@@ -7,6 +7,8 @@ using UnityEngine;
 /// </summary>
 public class BackgroundScroller : AutoPauseBehaviour
 {
+
+    // 깃허브 커밋 테스트
     #region Variables
 
     [Header("배경 스프라이트들")]
