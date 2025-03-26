@@ -6,16 +6,21 @@ public class TitleUI : MonoBehaviour
 {
     #region Variables
 
-    [Header("Å½»ç ½ÃÀÛ ¹öÆ°")]
-    [Tooltip("Å½»ç¸¦ ½ÃÀÛÇÏ´Â ¹öÆ°ÀÔ´Ï´Ù.")]
+    [Header("íƒì‚¬ ì‹œì‘ ë²„íŠ¼")]
+    [Tooltip("íƒì‚¬ë¥¼ ì‹œì‘í•˜ëŠ” ë²„íŠ¼ì…ë‹ˆë‹¤.")]
     [SerializeField] private Button startButton;
 
 
-    [Header("Å½»ç ½ÃÀÛ È®ÀÎ ÆË¾÷")]
-    [Tooltip("Å½»ç ½ÃÀÛ ¹öÆ°À» ´­·¶À» ¶§ ³ª¿À´Â ÆË¾÷Ã¢ÀÔ´Ï´Ù.")]
+    [Header("íƒì‚¬ ì‹œì‘ í™•ì¸ íŒì—…")]
+    [Tooltip("íƒì‚¬ ì‹œì‘ ë²„íŠ¼ì„ ëˆŒë €ì„ ë•Œ ë‚˜ì˜¤ëŠ” íŒì—…ì°½ì…ë‹ˆë‹¤.")]
     [SerializeField] private GameObject gameStart_YesNo;
 
+    [Header("íƒì‚¬ ì‹œì‘ í™•ì¸ íŒì—… í™•ì¸ ë²„íŠ¼")]
+    [Tooltip("ëˆ„ë¥´ë©´ ì”¬ ì´ë™í•©ë‹ˆë‹¤")]
     [SerializeField] private Button yesButton;
+    
+    [Header("íƒì‚¬ ì‹œì‘ í™•ì¸ íŒì—… ì·¨ì†Œ ë²„íŠ¼)]
+    [Tooltip("ëˆ„ë¥´ë©´ ì°½ì´ êº¼ì§‘ë‹ˆë‹¤")]
     [SerializeField] private Button noButton;
 
 
@@ -27,24 +32,24 @@ public class TitleUI : MonoBehaviour
     {
         if (startButton == null)
         {
-            Log.Error("TitleUI¿¡ StartButtonÀÌ ÁöÁ¤µÇÁö ¾Ê¾Ò½À´Ï´Ù.", this);
+            Log.Error("TitleUIì— StartButtonì´ ì§€ì •ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.", this);
             return;
         }
 
         startButton.onClick.AddListener(OnClickStart);
 
-        // ÆË¾÷ ºñÈ°¼ºÈ­·Î ½ÃÀÛ
+        // íŒì—… ë¹„í™œì„±í™”ë¡œ ì‹œì‘
         if (gameStart_YesNo != null)
             gameStart_YesNo.SetActive(false);
 
-        // ¹öÆ° ÀÌº¥Æ® ¿¬°á
+        // ë²„íŠ¼ ì´ë²¤íŠ¸ ì—°ê²°
         if (yesButton != null)
             yesButton.onClick.AddListener(OnClickYes);
-        Log.Info("Å½Çè ½ÃÀÛ ¹öÆ° Å¬¸¯");
+        Log.Info("íƒí—˜ ì‹œì‘ ë²„íŠ¼ í´ë¦­");
 
         if (noButton != null)
             noButton.onClick.AddListener(OnClickNo);
-        Log.Info("µ¹¾Æ°¡±â ¹öÆ° Å¬¸¯");
+        Log.Info("ëŒì•„ê°€ê¸° ë²„íŠ¼ í´ë¦­");
     }
 
     #endregion
@@ -52,7 +57,7 @@ public class TitleUI : MonoBehaviour
     #region Custom Methods
 
     /// <summary>
-    /// °ÔÀÓ ½ÃÀÛ ¹öÆ° Å¬¸¯ ½Ã °áÁ¤ ÆË¾÷Ã¢ÀÌ ¶ç¿öÁö°í GameSceneÀ¸·Î ÀüÈ¯ÇÕ´Ï´Ù.
+    /// ê²Œì„ ì‹œì‘ ë²„íŠ¼ í´ë¦­ ì‹œ ê²°ì • íŒì—…ì°½ì´ ë„ì›Œì§€ê³  GameSceneìœ¼ë¡œ ì „í™˜í•©ë‹ˆë‹¤.
     /// </summary>
     private void OnClickStart()
     {
