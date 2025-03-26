@@ -607,6 +607,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   handle: {fileID: 1950244751}
   handleRange: 100
+  canvasGroup: {fileID: 0}
 --- !u!224 &775654300
 RectTransform:
   m_ObjectHideFlags: 0
@@ -695,7 +696,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1019876091
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1530,6 +1531,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   handle: {fileID: 1352623011}
   handleRange: 100
+  canvasGroup: {fileID: 0}
 --- !u!225 &1890760906
 CanvasGroup:
   m_ObjectHideFlags: 0
