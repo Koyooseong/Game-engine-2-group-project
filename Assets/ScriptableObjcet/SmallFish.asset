@@ -18,3 +18,4 @@ MonoBehaviour:
   size: {x: 1, y: 1}
   moveSpeed: 3
   fallSpeed: 1
+  caughtPrefab: {fileID: 3496846283328981781, guid: 782dc6288e09a1e44a214caab6654527, type: 3}

@@ -21,6 +21,13 @@ public class FishData : ScriptableObject
 
     [Header("수직 속도 (프레임 단위)")]
     public float fallSpeed = 1f;
+
+    [Header("물고기 잡혔을 때 프리팹")]
+    public GameObject caughtPrefab;
+
+    [Header("판매 골드 단가")]
+    [Tooltip("해당 물고기를 팔았을 때 얻는 골드입니다.")]
+    public int goldValue = 10;
 }
 
 public enum FishType

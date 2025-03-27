@@ -60,7 +60,7 @@ public class DepthMarker : AutoPauseBehaviour
         if (deltaY > 0f)
         {
 
-            Log.Info("잠수함 이동 기록중");
+            //Log.Info("잠수함 이동 기록중");
             totalDepth += deltaY;
         }
 

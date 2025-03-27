@@ -18,3 +18,5 @@ MonoBehaviour:
   size: {x: 1, y: 1}
   moveSpeed: 3
   fallSpeed: 1
+  caughtPrefab: {fileID: 3393675754563492294, guid: d984fbe19519edd4285aae7a47116904, type: 3}
+  goldValue: 30

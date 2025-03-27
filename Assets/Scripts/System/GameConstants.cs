@@ -10,7 +10,10 @@ namespace Game
         public const float FUEL_BAR_WIDTH = 1080f;
         public const int EDITOR_INPUT_ID = -1;
 
+        public const int DEFAULT_GOLD = 0;
+
         public const string GAME_SCENE_NAME = "GameScene";
         public const string TITLE_SCENE_NAME = "Title";
+
     }
 }

@@ -1,3 +1,4 @@
+using Game;
 using UnityEngine;
 
 /// <summary>
@@ -11,6 +12,7 @@ public class Fish : MonoBehaviour
     private Vector2 direction;
     private Camera mainCamera;
     private PoolManager pool;
+    private bool isCaught = false;
 
     private const float VIEWPORT_REMOVE_Y = -0.1f;
 
@@ -25,6 +27,8 @@ public class Fish : MonoBehaviour
 
     private void Update()
     {
+        if (isCaught) return;
+
         Move();
 
         Vector3 viewPos = mainCamera.WorldToViewportPoint(transform.position);
@@ -70,6 +74,14 @@ public class Fish : MonoBehaviour
     /// </summary>
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (isCaught) return;
+
+        if (other.CompareTag("Net"))
+        {
+            Log.Info("Net과 충돌", this);
+            CatchFish();
+        }
+
         if (other.CompareTag("Wall"))
         {
             direction.x *= -1f;         //  좌우 방향만 반전
@@ -86,5 +98,29 @@ public class Fish : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, 0f, zRotation);
     }
 
+    /// <summary>
+    /// 그물에 걸렸을 때 동작을 처리합니다.
+    /// </summary>
+    private void CatchFish()
+    {
+        isCaught = true;
+
+        // 잡힌 물고기 수 카운트 증가
+        GameResultManager.AddFish(data.fishType, 1);
+
+        // 잡힌 프리팹이 존재할 경우 교체
+        if (data.caughtPrefab != null)
+        {
+            GameObject caught = Instantiate(data.caughtPrefab, transform.position, Quaternion.identity);
+            Destroy(caught, 3f); // 3초 후 사라짐 (천천히 위로 이동은 caughtPrefab 내에서 처리)
+        }
+        else
+        {
+            Log.Warn("caughtPrefab이 지정되지 않았습니다.", this);
+        }
+
+        // 기존 물고기 반환
+        pool.Return(gameObject);
+    }
     #endregion
 }
