@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      midfish_catch_0: -1803204628753605454
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
