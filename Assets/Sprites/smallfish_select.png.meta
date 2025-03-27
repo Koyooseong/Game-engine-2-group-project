@@ -273,7 +273,12 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      smallfish_select_0: 2006533765515656462
+      smallfish_select_1: 400947644714153408
+      smallfish_select_2: 8566041579195860256
+      smallfish_select_3: 6995586743332498663
+      smallfish_select_4: 7504001048794105335
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

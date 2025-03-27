@@ -273,7 +273,12 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      midfish_select_0: 2746968424909508535
+      midfish_select_1: 4430948368798241301
+      midfish_select_2: -6719400428160292747
+      midfish_select_3: 5741587110470875681
+      midfish_select_4: 1736225586623107312
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

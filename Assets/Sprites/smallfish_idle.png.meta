@@ -273,7 +273,12 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      smallfish_idle_0: 2677394834099090411
+      smallfish_idle_1: -1315415932302327303
+      smallfish_idle_2: 4131714472940215208
+      smallfish_idle_3: 808888953112288838
+      smallfish_idle_4: 4544718005987825740
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
