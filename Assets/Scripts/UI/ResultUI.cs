@@ -1,4 +1,5 @@
 using Game;
+using UnityEditor;
 using UnityEngine;
 
 public class ResultUI : MonoBehaviour
@@ -57,7 +58,6 @@ public class ResultUI : MonoBehaviour
             Log.Error("ResultUI에 resultPanel이 지정되지 않았습니다.", this);
             return;
         }
-
         resultPanel.SetActive(true);
         isResultActive = true;
 
