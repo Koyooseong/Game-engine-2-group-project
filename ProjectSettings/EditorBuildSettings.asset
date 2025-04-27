@@ -12,10 +12,10 @@ EditorBuildSettings:
     path: Assets/Scenes/2.unity
     guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/Title.unity
+    path: Assets/Scenes/ExploreScene.unity
     guid: 205ce52ecf4e4e7479987958412d6361
   - enabled: 1
-    path: Assets/Scenes/GameScene.unity
+    path: Assets/Scenes/AquariumScene.unity
     guid: 7a71b77459adacf4e85919ecaddca7d5
   - enabled: 1
     path: Assets/TextMesh Pro/Examples & Extras/Scenes/23 - Animating Vertex Attributes.unity
@@ -127,6 +127,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Settings/Scenes/URP2DSceneTemplate.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/PuzzleScene.unity
+    guid: e081d3ca2fd346f4f9994620b93e8559
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

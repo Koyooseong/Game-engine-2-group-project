@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 19f0d5a3745b66e44bc99e60edb9aaa5
+guid: e8665a3f0c352a9449fc8902872ac6b1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1797812971137684008
-    second: submarine_0
+      213: 4683796683310632637
+    second: Fish004_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: submarine_0
+      name: Fish004_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 3
-        width: 198
-        height: 178
+        x: 0
+        y: 0
+        width: 306
+        height: 306
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 822504d3f5d13f810800000000000000
-      internalID: 1797812971137684008
+      spriteID: dbe02e48440300140800000000000000
+      internalID: 4683796683310632637
       vertices: []
       indices: 
       edges: []
