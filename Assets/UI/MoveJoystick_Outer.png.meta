@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 3b1d3635b9d91b848bb060dbae74cb59
+guid: 123352248923f9b459371a79a9eb5477
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5405698874998688893
-    second: Catcher_0
+      213: 7245750813718429118
+    second: MoveJoystick_Outer_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 50
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Catcher_0
+      name: MoveJoystick_Outer_0
       rect:
         serializedVersion: 2
-        x: 1
+        x: 0
         y: 0
-        width: 49
-        height: 49
+        width: 309
+        height: 309
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d7c86077c76e40b40800000000000000
-      internalID: 5405698874998688893
+      spriteID: ebd3fa6b9f31e8460800000000000000
+      internalID: 7245750813718429118
       vertices: []
       indices: 
       edges: []
@@ -173,8 +173,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      Catcher_0: 5405698874998688893
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

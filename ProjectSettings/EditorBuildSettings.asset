@@ -12,10 +12,10 @@ EditorBuildSettings:
     path: Assets/Scenes/2.unity
     guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/ExploreScene.unity
+    path: Assets/Scenes/AquariumScene.unity
     guid: 205ce52ecf4e4e7479987958412d6361
   - enabled: 1
-    path: Assets/Scenes/AquariumScene.unity
+    path: Assets/Scenes/ExploreScene.unity
     guid: 7a71b77459adacf4e85919ecaddca7d5
   - enabled: 1
     path: Assets/TextMesh Pro/Examples & Extras/Scenes/23 - Animating Vertex Attributes.unity

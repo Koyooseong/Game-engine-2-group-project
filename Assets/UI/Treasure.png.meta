@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: 3b1d3635b9d91b848bb060dbae74cb59
+guid: 3d210bf2042385c4cb8f1b42ad870321
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5405698874998688893
-    second: Catcher_0
+      213: -8533606670350889490
+    second: Treasure_0
+  - first:
+      213: 1859003268786470826
+    second: Treasure_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +54,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 50
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -139,23 +142,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Catcher_0
+      name: Treasure_0
       rect:
         serializedVersion: 2
-        x: 1
+        x: 0
         y: 0
-        width: 49
-        height: 49
+        width: 95
+        height: 71
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d7c86077c76e40b40800000000000000
-      internalID: 5405698874998688893
+      spriteID: eedc4d042f9829980800000000000000
+      internalID: -8533606670350889490
       vertices: []
       indices: 
       edges: []
@@ -164,7 +167,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 0dd6f745a223e4045b40f48d78377808
     internalID: 0
     vertices: []
     indices: 
@@ -174,7 +177,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Catcher_0: 5405698874998688893
+      Treasure_0: -8533606670350889490
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
