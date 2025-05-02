@@ -1,0 +1,11 @@
+﻿ID,NAME,EXPLAIN_1,EXPLAIN_2,EXPLAIN_3,GOLD,TYPE,PUZZLE,RARE,FISH_IMG,PUZZLE_IMG
+FISH_001,정어리,설명1,설명2,설명3,2,small,2,normal,Prefabs/Fish001_0,Sprites/Fish_Puzzle/Fish001
+FISH_002,해파리,설명1,설명2,설명3,1,small,1,normal,Prefabs/Fish002_0,Sprites/Fish_Puzzle/Fish002
+FISH_003,오징어,설명1,설명2,설명3,3,small,3,normal,Prefabs/Fish003_0,Sprites/Fish_Puzzle/Fish003
+FISH_004,참치,설명1,설명2,설명3,6,middle,6,normal,Prefabs/Fish004_0,Sprites/Fish_Puzzle/Fish004
+FISH_005,고급 정어리,설명1,설명2,설명3,4,small,2,rare,Prefabs/Fish005_0,Sprites/Fish_Puzzle/Fish005
+FISH_006,참돔,설명1,설명2,설명3,12,middle,6,rare,Prefabs/Fish006_0,Sprites/Fish_Puzzle/Fish006
+FISH_007,청새치,설명1,설명2,설명3,16,big,8,rare,Prefabs/Fish007_0,Sprites/Fish_Puzzle/Fish007
+FISH_008,희귀 참치,설명1,설명2,설명3,18,middle,6,unique,Prefabs/Fish008_0,Sprites/Fish_Puzzle/Fish008
+FISH_009,희귀 청새치,설명1,설명2,설명3,24,big,8,unique,Prefabs/Fish009_0,Sprites/Fish_Puzzle/Fish009
+FISH_010,대왕오징어,설명1,설명2,설명3,27,big,9,unique,Prefabs/Fish010_0,Sprites/Fish_Puzzle/Fish010
