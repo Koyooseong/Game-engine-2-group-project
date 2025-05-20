@@ -1,19 +1,25 @@
 using UnityEngine;
 
 /// <summary>
-/// 조이스틱 입력 방향을 바탕으로 잠수함을 이동시킵니다.
-/// 회전 없이 XY 평면 상에서만 이동합니다.
+/// 조이스틱 입력의 방향 + 강도를 그대로 반영해 즉시 이동합니다.
+/// 손을 떼면 즉시 멈추고, 조이스틱을 약하게 밀면 느리게 움직입니다.
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 public class SubmarineController : MonoBehaviour
 {
     #region Variables
 
+    [Header("조이스틱 참조")]
+    [Tooltip("잠수함 이동을 위한 왼쪽 VirtualJoystick")]
+    [SerializeField] private VirtualJoystick leftJoystick;
+
     [Header("이동 속도")]
-    [SerializeField] private float moveSpeed = 5f;
+    [Tooltip("조이스틱 최대 입력 시 이동 속도")]
+    [Range(0f, 10f)]
+    [SerializeField] private float moveSpeed = 6f;
 
     private Rigidbody2D rb;
-    private Vector2 inputDirection = Vector2.zero;
+    private Vector2 currentInput = Vector2.zero;
 
     #endregion
 
@@ -21,9 +27,12 @@ public class SubmarineController : MonoBehaviour
 
     private void Awake()
     {
-        // Rigidbody2D 컴포넌트 참조 및 중력 제거
         rb = GetComponent<Rigidbody2D>();
-        rb.gravityScale = 0f;
+    }
+
+    private void Update()
+    {
+        UpdateInput();
     }
 
     private void FixedUpdate()
@@ -36,23 +45,19 @@ public class SubmarineController : MonoBehaviour
     #region Custom Methods
 
     /// <summary>
-    /// 외부에서 입력 방향을 전달받습니다.
+    /// 조이스틱 입력값을 가져옵니다.
     /// </summary>
-    public void SetInputDirection(Vector2 direction)
+    private void UpdateInput()
     {
-        inputDirection = direction;
+        currentInput = (leftJoystick != null) ? leftJoystick.GetInput() : Vector2.zero;
     }
 
     /// <summary>
-    /// Rigidbody를 이용해 잠수함을 이동시킵니다.
+    /// 조이스틱의 세기와 방향을 그대로 반영하여 속도를 지정합니다.
     /// </summary>
     private void Move()
     {
-        if (inputDirection == Vector2.zero)
-            return;
-
-        Vector2 newPos = rb.position + inputDirection * moveSpeed * Time.fixedDeltaTime;
-        rb.MovePosition(newPos);
+        rb.linearVelocity = currentInput * moveSpeed;
     }
 
     #endregion
