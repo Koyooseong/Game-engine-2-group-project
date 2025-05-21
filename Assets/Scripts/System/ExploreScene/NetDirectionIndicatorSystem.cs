@@ -24,7 +24,6 @@ public class NetDirectionIndicatorSystem : MonoBehaviour
     private void Update()
     {
         Vector2 dir = rightJoystick.GetInput();
-        Debug.Log($"[DEBUG] 조이스틱 입력: {dir}");
 
         if (dir.sqrMagnitude > 0.01f)
         {
