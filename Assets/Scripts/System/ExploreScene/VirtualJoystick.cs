@@ -1,9 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 /// <summary>
 /// 화면 내 위치와 반경에 따라 방향 벡터를 계산하는 가상 조이스틱입니다.
-/// 입력은 외부에서 Activate/Reset/Input 방식으로 제어됩니다.
+/// 쿨다운 중에는 입력이 제한되며, 오버레이 이미지로 시각화됩니다.
 /// </summary>
 public class VirtualJoystick : MonoBehaviour
 {
@@ -17,15 +18,31 @@ public class VirtualJoystick : MonoBehaviour
     [Tooltip("핸들이 이동할 수 있는 최대 거리")]
     [SerializeField] private float handleRange = 100f;
 
+    [Header("입력 기준이 되는 조이스틱 프레임")]
+    [Tooltip("입력 좌표 기준이 되는 프레임")]
+    [SerializeField] private RectTransform inputArea;
+
+    [Header("쿨다운 오버레이")]
+    [Tooltip("입력 제한 시 표시되는 오버레이 이미지")]
+    [SerializeField] private GameObject cooldownOverlay;
+
+    [Header("쿨다운 텍스트")]
+    [Tooltip("쿨다운 남은 시간을 표시할 TMP 텍스트")]
+    [SerializeField] private TMPro.TextMeshProUGUI cooldownText;
+
+
     private RectTransform rectTransform;
     private Vector2 inputDirection = Vector2.zero;
     private Vector2 startPosition;
     private bool isDragging = false;
+    private bool isInteractable = true;
 
     public int FingerId { get; private set; } = -1;
 
-    [Header("입력 기준이 되는 조이스틱 프레임")]
-    [SerializeField] private RectTransform inputArea;
+    /// <summary>
+    /// 조이스틱 입력 해제 시 호출되는 이벤트입니다.
+    /// </summary>
+    public event Action<Vector2> OnReleased;
 
     #endregion
 
@@ -54,46 +71,51 @@ public class VirtualJoystick : MonoBehaviour
     /// <summary>
     /// 조이스틱 입력을 활성화합니다.
     /// </summary>
-    /// <param name="fingerId">입력 주체 식별용 ID</param>
     public void Activate(int fingerId)
     {
+        if (!isInteractable) return;
+
         FingerId = fingerId;
         isDragging = true;
     }
 
     /// <summary>
-    /// 조이스틱 입력을 초기화합니다.
+    /// 조이스틱 입력을 초기화하며 방향 정보를 리셋합니다.
     /// </summary>
     public void ResetJoystick()
     {
         isDragging = false;
         FingerId = -1;
+
+        Vector2 releasedDirection = inputDirection;
         inputDirection = Vector2.zero;
 
         if (handle != null)
             handle.anchoredPosition = startPosition;
+
+        OnReleased?.Invoke(releasedDirection);
     }
 
     /// <summary>
-    /// 마우스 좌표 기준으로 입력 위치를 반영합니다.
+    /// 마우스 입력 좌표를 반영합니다.
     /// </summary>
-    /// <param name="screenPosition">스크린 위치</param>
     public void SetInputByMouse(Vector2 screenPosition)
     {
+        if (!isInteractable) return;
         SetInputInternal(screenPosition);
     }
 
     /// <summary>
-    /// 터치 좌표 기준으로 입력 위치를 반영합니다.
+    /// 터치 입력 좌표를 반영합니다.
     /// </summary>
-    /// <param name="screenPosition">스크린 위치</param>
     public void SetInputByTouch(Vector2 screenPosition)
     {
+        if (!isInteractable) return;
         SetInputInternal(screenPosition);
     }
 
     /// <summary>
-    /// 현재 입력 방향을 반환합니다.
+    /// 현재 조이스틱 방향을 반환합니다.
     /// </summary>
     public Vector2 GetInput()
     {
@@ -101,7 +123,7 @@ public class VirtualJoystick : MonoBehaviour
     }
 
     /// <summary>
-    /// 현재 조이스틱이 활성 상태인지 여부
+    /// 현재 조이스틱이 활성 상태인지 여부를 반환합니다.
     /// </summary>
     public bool IsActive()
     {
@@ -109,7 +131,23 @@ public class VirtualJoystick : MonoBehaviour
     }
 
     /// <summary>
-    /// 입력 위치를 로컬 좌표로 변환해 반영하는 내부 함수
+    /// 외부에서 조이스틱 입력 가능 여부를 설정합니다.
+    /// </summary>
+    public void SetInteractable(bool interactable)
+    {
+        isInteractable = interactable;
+
+        if (cooldownOverlay != null)
+            cooldownOverlay.SetActive(!interactable);
+        if (cooldownText != null && interactable)
+            cooldownText.text = "";
+
+        if (!interactable)
+            ResetJoystick();
+    }
+
+    /// <summary>
+    /// 입력 위치를 내부 로컬 좌표로 반영합니다.
     /// </summary>
     private void SetInputInternal(Vector2 screenPosition)
     {
@@ -118,15 +156,26 @@ public class VirtualJoystick : MonoBehaviour
         Canvas canvas = GetComponentInParent<Canvas>();
         Camera uiCamera = (canvas.renderMode == RenderMode.ScreenSpaceOverlay) ? null : canvas.worldCamera;
 
-        Vector2 localPoint;
-        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            inputArea, screenPosition, uiCamera, out localPoint))
+        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(inputArea, screenPosition, uiCamera, out Vector2 localPoint))
         {
             Vector2 offset = Vector2.ClampMagnitude(localPoint, handleRange);
             handle.anchoredPosition = offset;
             inputDirection = offset / handleRange;
         }
     }
+
+    /// <summary>
+    /// 쿨다운 남은 시간을 텍스트로 표시합니다.
+    /// </summary>
+    /// <param name="seconds">남은 시간 (초)</param>
+    public void UpdateCooldownText(float seconds)
+    {
+        if (cooldownText == null) return;
+
+        float clamped = Mathf.Max(0f, seconds);
+        cooldownText.text = clamped.ToString("F1"); // 소수점 한자리
+    }
+
 
     #endregion
 }
