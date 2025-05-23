@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 물고기 데이터를 관리하는 매니저입니다.
+/// 물고기 CSV 데이터를 로드하고, ID 기반으로 정보를 제공하는 데이터 매니저입니다.
 /// </summary>
 public class FishDataManager : MonoBehaviour
 {
@@ -11,9 +11,10 @@ public class FishDataManager : MonoBehaviour
     #region Variables
 
     [Header("CSV 파일")]
+    [Tooltip("물고기 데이터를 담은 CSV 파일")]
     [SerializeField] private TextAsset csvFile;
 
-    private Dictionary<string, FishData> fishDataDictionary = new Dictionary<string, FishData>();
+    private readonly Dictionary<string, FishData> fishDataDictionary = new();
 
     #endregion
 
@@ -37,13 +38,13 @@ public class FishDataManager : MonoBehaviour
     #region Custom Methods
 
     /// <summary>
-    /// CSV 파일을 읽어 데이터를 로드합니다.
+    /// CSV 파일을 읽어 FishData를 로드합니다.
     /// </summary>
     private void LoadCSV()
     {
         if (csvFile == null)
         {
-            Log.Error("CSV 파일이 연결되지 않았습니다.", this);
+            Log.Error("[FishDataManager] CSV 파일이 연결되지 않았습니다.", this);
             return;
         }
 
@@ -71,30 +72,37 @@ public class FishDataManager : MonoBehaviour
             fishDataDictionary[id] = data;
         }
 
-        Log.System($"FishData {fishDataDictionary.Count}개 로드 완료", this);
+        Log.System($"[FishDataManager] {fishDataDictionary.Count}개 로드 완료", this);
     }
 
+    /// <summary>
+    /// 특정 ID의 물고기 데이터를 반환합니다.
+    /// </summary>
     public FishData GetFishData(string id)
     {
         return fishDataDictionary.TryGetValue(id, out var data) ? data : default;
     }
 
-    public string GetExplain1(string id) => GetFishData(id).explain1;
-    public string GetExplain2(string id) => GetFishData(id).explain2;
-    public string GetExplain3(string id) => GetFishData(id).explain3;
+    public Dictionary<string, FishData> GetAllFish() => fishDataDictionary;
+
     public string GetName(string id) => GetFishData(id).name;
-    public int GetGold(string id) => GetFishData(id).gold;
-    public string GetType(string id) => GetFishData(id).type;
-    public int GetPuzzleCount(string id) => GetFishData(id).puzzle;
     public string GetRarity(string id) => GetFishData(id).rare;
     public string GetPrefabPath(string id) => GetFishData(id).fishImg;
-    public string GetPuzzleSpritePath(string id) => GetFishData(id).puzzleImg;
+
+    /// <summary>
+    /// Resources 폴더 기준으로 프리팹을 로드합니다.
+    /// </summary>
+    public GameObject LoadFishPrefab(string id)
+    {
+        string path = GetPrefabPath(id);
+        return Resources.Load<GameObject>(path);
+    }
 
     #endregion
 }
 
 /// <summary>
-/// 물고기 데이터를 저장하는 구조체입니다.
+/// CSV에서 로드된 물고기 데이터 구조체입니다.
 /// </summary>
 public struct FishData
 {

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 849c9371efef4e44f8b00f13fddd3e64
+guid: 2ed73d1d0ff8cf94498fdcff43807aa9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7590070660831232634
-    second: Ellipse 15_0
+      213: -2381068728312450369
+    second: Fish001_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Ellipse 15_0
+      name: Fish001_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 309
-        height: 309
+        width: 204
+        height: 102
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 68d3a09a2f6aaa690800000000000000
-      internalID: -7590070660831232634
+      spriteID: fb235276b9eb4fed0800000000000000
+      internalID: -2381068728312450369
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Ellipse 15_0: -7590070660831232634
+      Fish001_0: -2381068728312450369
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

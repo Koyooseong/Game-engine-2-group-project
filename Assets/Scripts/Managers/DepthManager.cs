@@ -13,8 +13,13 @@ public class DepthManager : MonoBehaviour, IInitializable
     [SerializeField] private TMPro.TextMeshProUGUI depthText;
 
     private float currentDepth = 0f;
-    private float depthSpeed = 1f; // 1초에 1m
+    private float depthSpeed = 3f; // 1초에 1m
     private DepthState currentState = DepthState.Shallow;
+
+    /// <summary>
+    /// 현재 수심 상태를 외부에서 읽을 수 있는 프로퍼티입니다.
+    /// </summary>
+    public DepthState CurrentState => currentState;
 
     #endregion
 
