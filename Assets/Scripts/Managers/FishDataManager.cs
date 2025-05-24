@@ -67,8 +67,13 @@ public class FishDataManager : MonoBehaviour
             string rare = columns[8];
             string fishImg = columns[9];
             string puzzleImg = columns[10];
+            string fishCatch = columns[11];
+            string fishSprite = columns[12];
 
-            FishData data = new FishData(id, name, explain1, explain2, explain3, gold, type, puzzle, rare, fishImg, puzzleImg);
+            FishData data = new FishData(id, name, explain1, explain2, explain3,
+                                         gold, type, puzzle, rare,
+                                         fishImg, puzzleImg, fishCatch, fishSprite);
+
             fishDataDictionary[id] = data;
         }
 
@@ -83,11 +88,35 @@ public class FishDataManager : MonoBehaviour
         return fishDataDictionary.TryGetValue(id, out var data) ? data : default;
     }
 
+    /// <summary>
+    /// 전체 물고기 데이터를 반환합니다.
+    /// </summary>
     public Dictionary<string, FishData> GetAllFish() => fishDataDictionary;
 
+    /// <summary>
+    /// ID로 물고기 이름을 반환합니다.
+    /// </summary>
     public string GetName(string id) => GetFishData(id).name;
+
+    /// <summary>
+    /// ID로 희귀도를 반환합니다.
+    /// </summary>
     public string GetRarity(string id) => GetFishData(id).rare;
+
+    /// <summary>
+    /// 프리팹 경로를 반환합니다.
+    /// </summary>
     public string GetPrefabPath(string id) => GetFishData(id).fishImg;
+
+    /// <summary>
+    /// 물고기 잡힌 스프라이트 경로를 반환합니다.
+    /// </summary>
+    public string GetCatchSprite(string id) => GetFishData(id).fishCatch;
+
+    /// <summary>
+    /// 물고기 이동 스프라이트 경로를 반환합니다.
+    /// </summary>
+    public string GetMoveSprite(string id) => GetFishData(id).fishSprite;
 
     /// <summary>
     /// Resources 폴더 기준으로 프리팹을 로드합니다.
@@ -117,9 +146,12 @@ public struct FishData
     public string rare;
     public string fishImg;
     public string puzzleImg;
+    public string fishCatch;
+    public string fishSprite;
 
     public FishData(string id, string name, string explain1, string explain2, string explain3,
-                    int gold, string type, int puzzle, string rare, string fishImg, string puzzleImg)
+                    int gold, string type, int puzzle, string rare,
+                    string fishImg, string puzzleImg, string fishCatch, string fishSprite)
     {
         this.id = id;
         this.name = name;
@@ -132,5 +164,7 @@ public struct FishData
         this.rare = rare;
         this.fishImg = fishImg;
         this.puzzleImg = puzzleImg;
+        this.fishCatch = fishCatch;
+        this.fishSprite = fishSprite;
     }
 }

@@ -1,7 +1,8 @@
 using UnityEngine;
 
 /// <summary>
-/// 지정된 방향으로 네트를 이동시키고, 거리 초과 시 풀로 반환합니다.
+/// 지정된 방향으로 네트를 이동시키며,
+/// 일정 거리 이동 또는 물고기와의 충돌 시 오브젝트 풀로 반환합니다.
 /// </summary>
 public class NetController : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class NetController : MonoBehaviour
     private float maxDistance;
     private float movedDistance;
     private Vector3 lastPosition;
+
+    private bool isConsumed = false;
 
     [Header("이동 속도")]
     [Tooltip("초당 이동 속도 (px 기준)")]
@@ -22,6 +25,8 @@ public class NetController : MonoBehaviour
 
     private void Update()
     {
+        if (isConsumed) return;
+
         float distance = moveSpeed * Time.deltaTime;
         transform.Translate(moveDirection * distance);
         movedDistance += Vector3.Distance(transform.position, lastPosition);
@@ -29,16 +34,18 @@ public class NetController : MonoBehaviour
 
         if (movedDistance >= maxDistance)
         {
-            // 하이라키에 있는 ObjectPool 사용
-            ObjectPool pool = transform.parent.GetComponent<ObjectPool>();
-            if (pool != null)
-            {
-                pool.Release(gameObject);
-            }
-            else
-            {
-                Destroy(gameObject); // 예외 처리
-            }
+            ReleaseOrDestroy();
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (isConsumed) return;
+
+        if (other.CompareTag("Fish"))
+        {
+            isConsumed = true;
+            ReleaseOrDestroy();
         }
     }
 
@@ -55,6 +62,24 @@ public class NetController : MonoBehaviour
         maxDistance = range;
         movedDistance = 0f;
         lastPosition = transform.position;
+        isConsumed = false;
+    }
+
+    /// <summary>
+    /// 오브젝트 풀로 반환하거나 없으면 파괴합니다.
+    /// </summary>
+    private void ReleaseOrDestroy()
+    {
+        ObjectPool pool = transform.parent.GetComponent<ObjectPool>();
+
+        if (pool != null)
+        {
+            pool.Release(gameObject); // 내부에서 SetActive(false) 처리
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     #endregion
