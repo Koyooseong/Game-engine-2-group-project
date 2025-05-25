@@ -112,6 +112,11 @@ public class UpgradeManager : MonoBehaviour
         return true;
     }
 
+    public List<UpgradeData> GetUpgradeTable(UpgradeType type)
+    {
+        return upgradeTable[type];
+    }
+
     #endregion
 }
 

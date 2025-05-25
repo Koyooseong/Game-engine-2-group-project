@@ -2652,7 +2652,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 494534338}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1969599065}
+        m_TargetAssemblyTypeName: UpgradeUI, Assembly-CSharp
+        m_MethodName: OnClickUpgrade
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &494534338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4349,7 +4361,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 614416691}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1969599065}
+        m_TargetAssemblyTypeName: UpgradeUI, Assembly-CSharp
+        m_MethodName: OnClickUpgrade
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &614416691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4788,7 +4812,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -483, y: 183}
+  m_AnchoredPosition: {x: -483, y: -278}
   m_SizeDelta: {x: 961, y: 411}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &702666333
@@ -6801,7 +6825,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 878183935}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1969599065}
+        m_TargetAssemblyTypeName: UpgradeUI, Assembly-CSharp
+        m_MethodName: OnClickUpgrade
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &878183935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13716,7 +13752,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -483, y: -278}
+  m_AnchoredPosition: {x: -483, y: 183}
   m_SizeDelta: {x: 961, y: 411}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1785826433
@@ -15367,6 +15403,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1969599064}
+  - component: {fileID: 1969599065}
   m_Layer: 5
   m_Name: Upgrade
   m_TagString: Untagged
@@ -15389,8 +15426,8 @@ RectTransform:
   - {fileID: 2135609671}
   - {fileID: 581516824}
   - {fileID: 1045800651}
-  - {fileID: 702666332}
   - {fileID: 1785826432}
+  - {fileID: 702666332}
   - {fileID: 1476332529}
   m_Father: {fileID: 1077462870}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15399,6 +15436,38 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1080, y: 1920}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1969599065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969599063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c37cb06bc25dc2b4daf98dc11d9f0d34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goldText: {fileID: 1476332531}
+  upgradeSlots:
+  - type: 0
+    levelText: {fileID: 1232015851}
+    costText: {fileID: 1728762999}
+    currentValueText: {fileID: 396842222}
+    nextValueText: {fileID: 1282906680}
+    upgradeButton: {fileID: 614416690}
+  - type: 1
+    levelText: {fileID: 876142383}
+    costText: {fileID: 1264641529}
+    currentValueText: {fileID: 456648498}
+    nextValueText: {fileID: 1785585884}
+    upgradeButton: {fileID: 494534337}
+  - type: 2
+    levelText: {fileID: 1460932758}
+    costText: {fileID: 1902685771}
+    currentValueText: {fileID: 836788389}
+    nextValueText: {fileID: 66093190}
+    upgradeButton: {fileID: 878183934}
 --- !u!1 &1981543598
 GameObject:
   m_ObjectHideFlags: 0
