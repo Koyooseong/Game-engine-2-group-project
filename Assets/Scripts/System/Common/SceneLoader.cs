@@ -66,5 +66,31 @@ public class SceneLoader : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 지정된 씬을 언로드하고, 비활성화된 Canvas들을 다시 활성화합니다.
+    /// </summary>
+    public void UnloadSceneAndEnableCanvas(string sceneName)
+    {
+        SceneManager.UnloadSceneAsync(sceneName);
+
+        if (canvasesToDisable == null || canvasesToDisable.Length == 0)
+        {
+            Log.Warn("다시 활성화할 Canvas가 설정되지 않았습니다.", this);
+            return;
+        }
+
+        foreach (Canvas canvas in canvasesToDisable)
+        {
+            if (canvas != null)
+            {
+                canvas.gameObject.SetActive(true);
+                Log.Info($"Canvas 다시 활성화 완료: {canvas.gameObject.name}", this);
+            }
+        }
+
+        Log.System($"씬 언로드 및 Canvas 활성화 완료: {sceneName}", this);
+    }
+
+
     #endregion
 }

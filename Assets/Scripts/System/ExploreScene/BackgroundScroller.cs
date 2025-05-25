@@ -5,10 +5,8 @@ using UnityEngine;
 /// 배경이 화면 아래로 내려가면 위로 재배치됩니다.
 /// 잠수함은 스크롤의 영향을 받지 않습니다.
 /// </summary>
-public class BackgroundScroller : MonoBehaviour
+public class BackgroundScroller : MonoBehaviour, IInitializable
 {
-
-    // 깃허브 커밋 테스트
     #region Variables
 
     [Header("배경 스프라이트들")]
@@ -33,11 +31,12 @@ public class BackgroundScroller : MonoBehaviour
 
     private void Update()
     {
+        if (PauseSystem.Instance != null && PauseSystem.Instance.IsPaused()) return;
         if (backgrounds == null || backgrounds.Length == 0) return;
 
         foreach (Transform bg in backgrounds)
         {
-            if (bg == null) continue; // 실수로 삭제되었을 경우 안전하게 스킵
+            if (bg == null) continue;
 
             bg.Translate(Vector3.down * scrollSpeed * Time.deltaTime);
 
@@ -45,6 +44,27 @@ public class BackgroundScroller : MonoBehaviour
             {
                 bg.position = new Vector3(bg.position.x, startY, bg.position.z);
             }
+        }
+    }
+
+    #endregion
+
+    #region Custom Methods
+
+    /// <summary>
+    /// 초기화 시 호출되며 일시정지 시스템에 등록합니다.
+    /// </summary>
+    public void Init()
+    {
+        PauseSystem.Instance.Register(this);
+        Log.System("[BackgroundScroller] 배경 스크롤러 초기화 완료", this);
+    }
+
+    private void OnDestroy()
+    {
+        if (PauseSystem.Instance != null)
+        {
+            PauseSystem.Instance.Unregister(this);
         }
     }
 

@@ -30,7 +30,6 @@ public class VirtualJoystick : MonoBehaviour
     [Tooltip("쿨다운 남은 시간을 표시할 TMP 텍스트")]
     [SerializeField] private TMPro.TextMeshProUGUI cooldownText;
 
-
     private RectTransform rectTransform;
     private Vector2 inputDirection = Vector2.zero;
     private Vector2 startPosition;
@@ -62,26 +61,27 @@ public class VirtualJoystick : MonoBehaviour
     {
         if (handle != null)
             startPosition = handle.anchoredPosition;
+
+        PauseSystem.Instance?.Register(this);
+    }
+
+    private void OnDestroy()
+    {
+        PauseSystem.Instance?.Unregister(this);
     }
 
     #endregion
 
     #region Custom Methods
 
-    /// <summary>
-    /// 조이스틱 입력을 활성화합니다.
-    /// </summary>
     public void Activate(int fingerId)
     {
-        if (!isInteractable) return;
+        if (!isInteractable || PauseSystem.Instance?.IsPaused() == true) return;
 
         FingerId = fingerId;
         isDragging = true;
     }
 
-    /// <summary>
-    /// 조이스틱 입력을 초기화하며 방향 정보를 리셋합니다.
-    /// </summary>
     public void ResetJoystick()
     {
         isDragging = false;
@@ -96,43 +96,22 @@ public class VirtualJoystick : MonoBehaviour
         OnReleased?.Invoke(releasedDirection);
     }
 
-    /// <summary>
-    /// 마우스 입력 좌표를 반영합니다.
-    /// </summary>
     public void SetInputByMouse(Vector2 screenPosition)
     {
-        if (!isInteractable) return;
+        if (!isInteractable || PauseSystem.Instance?.IsPaused() == true) return;
         SetInputInternal(screenPosition);
     }
 
-    /// <summary>
-    /// 터치 입력 좌표를 반영합니다.
-    /// </summary>
     public void SetInputByTouch(Vector2 screenPosition)
     {
-        if (!isInteractable) return;
+        if (!isInteractable || PauseSystem.Instance?.IsPaused() == true) return;
         SetInputInternal(screenPosition);
     }
 
-    /// <summary>
-    /// 현재 조이스틱 방향을 반환합니다.
-    /// </summary>
-    public Vector2 GetInput()
-    {
-        return inputDirection;
-    }
+    public Vector2 GetInput() => inputDirection;
 
-    /// <summary>
-    /// 현재 조이스틱이 활성 상태인지 여부를 반환합니다.
-    /// </summary>
-    public bool IsActive()
-    {
-        return isDragging;
-    }
+    public bool IsActive() => isDragging;
 
-    /// <summary>
-    /// 외부에서 조이스틱 입력 가능 여부를 설정합니다.
-    /// </summary>
     public void SetInteractable(bool interactable)
     {
         isInteractable = interactable;
@@ -146,9 +125,6 @@ public class VirtualJoystick : MonoBehaviour
             ResetJoystick();
     }
 
-    /// <summary>
-    /// 입력 위치를 내부 로컬 좌표로 반영합니다.
-    /// </summary>
     private void SetInputInternal(Vector2 screenPosition)
     {
         if (!isDragging || handle == null) return;
@@ -164,18 +140,13 @@ public class VirtualJoystick : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 쿨다운 남은 시간을 텍스트로 표시합니다.
-    /// </summary>
-    /// <param name="seconds">남은 시간 (초)</param>
     public void UpdateCooldownText(float seconds)
     {
         if (cooldownText == null) return;
 
         float clamped = Mathf.Max(0f, seconds);
-        cooldownText.text = clamped.ToString("F1"); // 소수점 한자리
+        cooldownText.text = clamped.ToString("F1");
     }
-
 
     #endregion
 }

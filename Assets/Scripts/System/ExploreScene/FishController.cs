@@ -49,13 +49,28 @@ public class FishController : MonoBehaviour
     {
         InitializeSpeed();
         InitializeDirection();
+
+        PauseSystem.Instance?.Register(this);
     }
 
     private void FixedUpdate()
     {
-        if (!isCaught)
+        if (PauseSystem.Instance?.IsPaused() == true || isCaught)
         {
-            rb.linearVelocity = new Vector2(directionX * horizontalSpeed, -verticalSpeed);
+            rb.linearVelocity = Vector2.zero; // ⭐ 바로 멈추게 하기 위해 속도 수동으로 0 설정
+            return;
+        }
+
+        rb.linearVelocity = new Vector2(directionX * horizontalSpeed, -verticalSpeed);
+    }
+
+    private void Update()
+    {
+        if (PauseSystem.Instance?.IsPaused() == true) return;
+
+        if (transform.position.y <= -10f)
+        {
+            ReleaseOrDestroy();
         }
     }
 
@@ -77,12 +92,9 @@ public class FishController : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void OnDestroy()
     {
-        if (transform.position.y <= -10f)
-        {
-            ReleaseOrDestroy();
-        }
+        PauseSystem.Instance?.Unregister(this);
     }
 
     #endregion
@@ -145,17 +157,14 @@ public class FishController : MonoBehaviour
     {
         isCaught = true;
 
-        // 이동 정지
         rb.linearVelocity = Vector2.zero;
         rb.bodyType = RigidbodyType2D.Kinematic;
 
-        // 애니메이터 비활성화
         if (animator != null)
         {
             animator.enabled = false;
         }
 
-        // 잡힌 스프라이트 적용
         Sprite catchSprite = Resources.Load<Sprite>(FishDataManager.Instance.GetCatchSprite(fishKey));
         if (catchSprite != null)
         {
@@ -166,10 +175,8 @@ public class FishController : MonoBehaviour
             Log.Warn($"[FishController] CatchSprite 불러오기 실패 - {fishKey}", this);
         }
 
-        // ExploreSceneInventory에 전달
         ExploreSceneInventory.Instance.AddFish(fishKey);
 
-        // 0.5초 후 파괴
         Invoke(nameof(ReleaseOrDestroy), 0.5f);
     }
 
@@ -190,6 +197,16 @@ public class FishController : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        rb.simulated = true;
+    }
+
+    private void OnDisable()
+    {
+        rb.simulated = false;
+        rb.linearVelocity = Vector2.zero;
+    }
 
     #endregion
 }

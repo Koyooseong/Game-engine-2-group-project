@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// 네트의 발사 쿨다운과 풀링, 발사 방향을 제어하는 매니저입니다.
+/// 네트의 발사 쿨다운과 풀링, 크기 기반 이동 범위를 제어하는 매니저입니다.
 /// </summary>
 public class NetLauncherManager : MonoBehaviour
 {
@@ -20,9 +20,11 @@ public class NetLauncherManager : MonoBehaviour
     [Tooltip("오른쪽 VirtualJoystick 인스턴스")]
     [SerializeField] private VirtualJoystick rightJoystick;
 
+    [Header("픽셀 → 스케일 변환 비율")]
+    [Tooltip("40px = scale 1.0 기준일 경우 1 / 40 = 0.025")]
+    [SerializeField] private float pixelToScaleRatio = 1f / 40f;
 
     private float cooldownTime;
-    private float range;
     private float nextFireTime;
 
     #endregion
@@ -32,7 +34,6 @@ public class NetLauncherManager : MonoBehaviour
     private void Start()
     {
         cooldownTime = UpgradeManager.Instance.GetCurrentValue(UpgradeType.Cooldown);
-        range = UpgradeManager.Instance.GetCurrentValue(UpgradeType.Range);
 
         if (rightJoystick != null)
             rightJoystick.OnReleased += HandleJoystickReleased;
@@ -63,8 +64,11 @@ public class NetLauncherManager : MonoBehaviour
         GameObject net = netPool.Get();
         net.transform.position = launchPoint.position;
 
+        float pixelSize = UpgradeManager.Instance.GetCurrentValue(UpgradeType.Range);
+        float scale = pixelSize * pixelToScaleRatio;
+
         NetController controller = net.GetComponent<NetController>();
-        controller.Init(direction.normalized, range);
+        controller.Init(direction.normalized, scale);
 
         StopAllCoroutines();
         StartCoroutine(ShowCooldownUI());
@@ -86,8 +90,6 @@ public class NetLauncherManager : MonoBehaviour
 
         rightJoystick.SetInteractable(true);
     }
-
-
 
     #endregion
 }

@@ -37,69 +37,50 @@ public class FishManager : MonoBehaviour, IInitializable
 
     #region Custom Methods
 
-    /// <summary>
-    /// GameStartController에 의해 호출되며, 물고기 생성 루틴을 시작합니다.
-    /// </summary>
     public void Init()
     {
         SetupRarityTable();
         StartCoroutine(FishSpawnRoutine());
+        PauseSystem.Instance?.Register(this);
         Log.System("[Fish] 물고기 생성 루틴 시작됨", this);
     }
 
-    /// <summary>
-    /// 수심 상태별 등급 확률 테이블을 초기화합니다.
-    /// </summary>
     private void SetupRarityTable()
     {
-        rarityChances[DepthState.Shallow] = new()
-        {
-            { "normal", 0.9f },
-            { "rare", 0.1f }
-        };
-
-        rarityChances[DepthState.Mid] = new()
-        {
-            { "normal", 0.6f },
-            { "rare", 0.35f },
-            { "unique", 0.05f }
-        };
-
-        rarityChances[DepthState.Deep] = new()
-        {
-            { "normal", 0.3f },
-            { "rare", 0.5f },
-            { "unique", 0.2f }
-        };
+        rarityChances[DepthState.Shallow] = new() { { "normal", 0.9f }, { "rare", 0.1f } };
+        rarityChances[DepthState.Mid] = new() { { "normal", 0.6f }, { "rare", 0.35f }, { "unique", 0.05f } };
+        rarityChances[DepthState.Deep] = new() { { "normal", 0.3f }, { "rare", 0.5f }, { "unique", 0.2f } };
     }
 
-    /// <summary>
-    /// 일정 시간마다 1~2마리의 물고기를 생성하는 루틴입니다.
-    /// </summary>
     private IEnumerator FishSpawnRoutine()
     {
         while (true)
         {
+            if (PauseSystem.Instance?.IsPaused() == true)
+            {
+                yield return null;
+                continue;
+            }
+
             int spawnCount = Random.Range(minSpawnCount, maxSpawnCount + 1);
 
             for (int i = 0; i < spawnCount; i++)
             {
                 float delay = Random.Range(minInterval, maxInterval);
                 yield return new WaitForSeconds(delay);
+
+                if (PauseSystem.Instance?.IsPaused() == true) continue;
+
                 SpawnFish();
             }
         }
     }
 
-    /// <summary>
-    /// 물고기 1마리를 생성합니다.
-    /// </summary>
     private void SpawnFish()
     {
         DepthState currentDepth = depthManager.CurrentState;
         string rarity = GetRarityByChance(currentDepth);
         string fishId = GetRandomFishIdByRarity(rarity);
-
         if (string.IsNullOrEmpty(fishId)) return;
 
         GameObject fish = fishObjectPool.Get(fishId);
@@ -111,13 +92,9 @@ public class FishManager : MonoBehaviour, IInitializable
         );
 
         fish.transform.rotation = Quaternion.Euler(0, 0, Random.value < 0.5f ? 90f : -90f);
-
         Log.Info($"[Fish] '{fishId}' ({rarity}) 생성됨", fish);
     }
 
-    /// <summary>
-    /// 현재 수심 상태에 따른 확률로 물고기 등급을 결정합니다.
-    /// </summary>
     private string GetRarityByChance(DepthState state)
     {
         float rand = Random.value;
@@ -130,12 +107,9 @@ public class FishManager : MonoBehaviour, IInitializable
                 return pair.Key;
         }
 
-        return "normal"; // fallback
+        return "normal";
     }
 
-    /// <summary>
-    /// 등급에 해당하는 물고기 중 무작위 하나의 ID를 반환합니다.
-    /// </summary>
     private string GetRandomFishIdByRarity(string rarity)
     {
         tempFilteredFish.Clear();
@@ -150,6 +124,11 @@ public class FishManager : MonoBehaviour, IInitializable
 
         int index = Random.Range(0, tempFilteredFish.Count);
         return tempFilteredFish[index];
+    }
+
+    private void OnDestroy()
+    {
+        PauseSystem.Instance?.Unregister(this);
     }
 
     #endregion

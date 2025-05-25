@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// ExploreScene에서 장애물 및 보물상자를 일정 시간마다 생성하는 시스템입니다.
 /// </summary>
-public class EvObjectManager : MonoBehaviour
+public class EvObjectManager : MonoBehaviour, IInitializable
 {
     #region Variables
 
@@ -27,13 +27,10 @@ public class EvObjectManager : MonoBehaviour
 
     #region Unity Methods
 
-    private void Start()
-    {
-        ScheduleNextSpawn(Random.Range(2f, 5f));
-    }
-
     private void Update()
     {
+        if (PauseSystem.Instance != null && PauseSystem.Instance.IsPaused()) return;
+
         if (Time.time >= nextSpawnTime)
         {
             SpawnEvObject();
@@ -44,6 +41,16 @@ public class EvObjectManager : MonoBehaviour
     #endregion
 
     #region Custom Methods
+
+    /// <summary>
+    /// 시스템 초기화 시 호출되며, 첫 스폰 타이머를 설정합니다.
+    /// </summary>
+    public void Init()
+    {
+        ScheduleNextSpawn(Random.Range(2f, 5f));
+        PauseSystem.Instance.Register(this);
+        Log.System("[EvObjectManager] 장애물 생성 시스템 초기화 완료", this);
+    }
 
     /// <summary>
     /// 다음 생성 시간을 설정합니다.
@@ -68,6 +75,14 @@ public class EvObjectManager : MonoBehaviour
             : obstaclePool.Get();
 
         obj.transform.position = spawnPos;
+    }
+
+    private void OnDestroy()
+    {
+        if (PauseSystem.Instance != null)
+        {
+            PauseSystem.Instance.Unregister(this);
+        }
     }
 
     #endregion

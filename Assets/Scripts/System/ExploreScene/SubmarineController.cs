@@ -1,22 +1,29 @@
 using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
+using TMPro;
 
-/// <summary>
-/// 조이스틱 입력의 방향 + 강도를 그대로 반영해 즉시 이동합니다.
-/// 손을 떼면 즉시 멈추고, 조이스틱을 약하게 밀면 느리게 움직입니다.
-/// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 public class SubmarineController : MonoBehaviour
 {
     #region Variables
 
     [Header("조이스틱 참조")]
-    [Tooltip("잠수함 이동을 위한 왼쪽 VirtualJoystick")]
     [SerializeField] private VirtualJoystick leftJoystick;
 
-    [Header("이동 속도")]
-    [Tooltip("조이스틱 최대 입력 시 이동 속도")]
+    [Header("속도 설정")]
     [Range(0f, 10f)]
     [SerializeField] private float moveSpeed = 6f;
+
+    [Header("연결된 시스템")]
+    [SerializeField] private DepthManager depthManager;
+    [SerializeField] private FuelManager fuelManager;
+
+    [Header("이벤트 텍스트")]
+    [SerializeField] private TextMeshPro eventText;
+
+    [Header("깜빡임 대상")]
+    [SerializeField] private SpriteRenderer submarineRenderer;
 
     private Rigidbody2D rb;
     private Vector2 currentInput = Vector2.zero;
@@ -40,24 +47,77 @@ public class SubmarineController : MonoBehaviour
         Move();
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Treasure"))
+        {
+            HandleTreasure(other.GetComponent<TreasureController>());
+        }
+        else if (other.CompareTag("Obstacle"))
+        {
+            HandleObstacle(other.GetComponent<ObstacleController>());
+        }
+    }
+
     #endregion
 
     #region Custom Methods
 
-    /// <summary>
-    /// 조이스틱 입력값을 가져옵니다.
-    /// </summary>
     private void UpdateInput()
     {
         currentInput = (leftJoystick != null) ? leftJoystick.GetInput() : Vector2.zero;
     }
 
-    /// <summary>
-    /// 조이스틱의 세기와 방향을 그대로 반영하여 속도를 지정합니다.
-    /// </summary>
     private void Move()
     {
         rb.linearVelocity = currentInput * moveSpeed;
+    }
+
+    private void HandleTreasure(TreasureController treasure)
+    {
+        int bonusGold = 50 + Mathf.FloorToInt(depthManager.GetCurrentDepth());
+        ExploreSceneInventory.Instance.AddGold(bonusGold);
+
+        if (eventText != null)
+        {
+            eventText.text = $"+ {bonusGold} G";
+            eventText.gameObject.SetActive(true);
+            StartCoroutine(HideTextAfterDelay());
+        }
+
+        treasure?.Deactivate();
+    }
+
+    private void HandleObstacle(ObstacleController obstacle)
+    {
+        float damage = fuelManager.GetCurrentFuel() * 0.1f;
+        fuelManager.ReduceFuel(damage);
+
+        if (submarineRenderer != null)
+        {
+            StartCoroutine(BlinkSubmarine());
+        }
+
+        obstacle?.Deactivate();
+    }
+    private IEnumerator HideTextAfterDelay()
+    {
+        yield return new WaitForSeconds(2f);
+        if (eventText != null)
+        {
+            eventText.gameObject.SetActive(false);
+        }
+    }
+
+    private IEnumerator BlinkSubmarine()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            submarineRenderer.color = new Color(1f, 1f, 1f, 0.3f);
+            yield return new WaitForSeconds(0.5f);
+            submarineRenderer.color = new Color(1f, 1f, 1f, 1f);
+            yield return new WaitForSeconds(0.5f);
+        }
     }
 
     #endregion

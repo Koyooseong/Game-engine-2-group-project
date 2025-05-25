@@ -7,6 +7,8 @@ TagManager:
   - Wall
   - Net
   - Fish
+  - Obstacle
+  - Treasure
   layers:
   - Default
   - TransparentFX
