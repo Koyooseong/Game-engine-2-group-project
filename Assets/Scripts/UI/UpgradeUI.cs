@@ -37,7 +37,7 @@ public class UpgradeUI : MonoBehaviour
     [SerializeField] private UpgradeSlot[] upgradeSlots;
 
     #endregion
-
+    //¾Ö
     #region Unity Methods
 
     private void OnEnable()
