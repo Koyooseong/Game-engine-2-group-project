@@ -85,5 +85,26 @@ public class TankGridManager : MonoBehaviour
 
     public Dictionary<Vector2Int, TankGridController> GetAllGrids() => gridMap;
 
+    public Vector2Int GetNearestGrid(Vector3 worldPos)
+    {
+        float minDistance = float.MaxValue;
+        Vector2Int nearestGrid = Vector2Int.zero;
+
+        foreach (var pair in gridMap)
+        {
+            TankGridController controller = pair.Value;
+            Vector3 cellWorldPos = controller.GetComponent<RectTransform>().position;
+            float distance = Vector3.Distance(worldPos, cellWorldPos);
+
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                nearestGrid = pair.Key;
+            }
+        }
+
+        return nearestGrid;
+    }
+
     #endregion
 }

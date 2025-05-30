@@ -54,7 +54,55 @@ public class FishBlockDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandl
     /// </summary>
     public void OnEndDrag(PointerEventData eventData)
     {
-        ClearBlock();
+        if (currentBlock == null)
+        {
+            Log.Warn("[OnEndDrag] currentBlock이 null입니다", this);
+            return;
+        }
+
+        // 1. 충돌 감지
+        Vector3 center = currentBlock.transform.position;
+        Collider2D[] hits = Physics2D.OverlapCircleAll(center, 10f);
+        Log.System($"[OnEndDrag] 충돌 감지됨: 총 {hits.Length}개", this);
+
+        // 2. 후보 중 가장 가까운 GridCell 찾기
+        float minDist = float.MaxValue;
+        Transform nearestCell = null;
+
+        foreach (Collider2D col in hits)
+        {
+            Log.Info($"[OnEndDrag] 감지된 Collider: {col.name}", col);
+
+            if (!col.CompareTag("GridCell"))
+            {
+                Log.Info($"[OnEndDrag] → 태그 불일치: {col.tag}", col);
+                continue;
+            }
+
+            float dist = Vector3.Distance(center, col.transform.position);
+            Log.Info($"[OnEndDrag] → GridCell {col.name} 거리: {dist}", col);
+
+            if (dist < minDist)
+            {
+                minDist = dist;
+                nearestCell = col.transform;
+                Log.System($"[OnEndDrag] ★ 현재 가장 가까운 셀: {col.name}, 거리: {dist}", col);
+            }
+        }
+
+        // 3. 스냅 위치 적용
+        if (nearestCell != null)
+        {
+            RectTransform cellRT = nearestCell.GetComponent<RectTransform>();
+            Vector2 snapPos = cellRT.anchoredPosition + new Vector2(0f, 144f);
+            currentBlock.GetComponent<RectTransform>().anchoredPosition = snapPos;
+
+            Log.System($"[OnEndDrag] 블록 스냅 완료: anchoredPosition {snapPos}", currentBlock);
+        }
+        else
+        {
+            Log.Warn("[OnEndDrag] 스냅할 셀을 찾지 못했습니다!", this);
+        }
     }
 
     #endregion
@@ -102,7 +150,7 @@ public class FishBlockDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandl
     {
         if (currentBlock != null)
         {
-            Destroy(currentBlock);
+            //Destroy(currentBlock);
             currentBlock = null;
         }
     }

@@ -37,6 +37,19 @@ public class FishBlockBuilder : MonoBehaviour
         blockRect.anchorMin = blockRect.anchorMax = new Vector2(0.5f, 0.5f);
         blockRect.pivot = new Vector2(0.5f, 0.5f);
         blockRect.anchoredPosition = new Vector2(DEFAULT_X, DEFAULT_Y);
+        blockRect.sizeDelta = new Vector2(CELL_SIZE, CELL_SIZE);
+
+        // 🔧 BoxCollider2D 추가
+        BoxCollider2D collider = blockRoot.AddComponent<BoxCollider2D>();
+        collider.size = new Vector2(CELL_SIZE, CELL_SIZE); // 셀 크기와 동일하게
+        collider.offset = Vector2.zero;
+        collider.isTrigger = false; // 충돌 대상으로 작동해야 하니까
+
+        // 🔧 Rigidbody2D 추가 (필수)
+        Rigidbody2D rb = blockRoot.AddComponent<Rigidbody2D>();
+        rb.bodyType = RigidbodyType2D.Kinematic;
+        rb.simulated = true;
+        rb.useFullKinematicContacts = true; // 트리거와 접촉도 감지 가능하게 설정
 
         List<Vector2Int> cellOffsets = ParseShape(data.puzzleShape);
         Log.System($"[FishBlockBuilder] 셀 {cellOffsets.Count}개 생성 예정 for {data.name}", this);
