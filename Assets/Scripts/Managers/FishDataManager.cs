@@ -1,8 +1,8 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ¹°°í±â CSV µ¥ÀÌÅÍ¸¦ ·ÎµåÇÏ°í, ID ±â¹İÀ¸·Î Á¤º¸¸¦ Á¦°øÇÏ´Â µ¥ÀÌÅÍ ¸Å´ÏÀúÀÔ´Ï´Ù.
+/// ë¬¼ê³ ê¸° CSV ë°ì´í„°ë¥¼ ë¡œë“œí•˜ê³ , ID ê¸°ë°˜ìœ¼ë¡œ ì •ë³´ë¥¼ ì œê³µí•˜ëŠ” ë°ì´í„° ë§¤ë‹ˆì €ì…ë‹ˆë‹¤.
 /// </summary>
 public class FishDataManager : MonoBehaviour
 {
@@ -10,8 +10,8 @@ public class FishDataManager : MonoBehaviour
 
     #region Variables
 
-    [Header("CSV ÆÄÀÏ")]
-    [Tooltip("¹°°í±â µ¥ÀÌÅÍ¸¦ ´ãÀº CSV ÆÄÀÏ")]
+    [Header("CSV íŒŒì¼")]
+    [Tooltip("ë¬¼ê³ ê¸° ë°ì´í„°ë¥¼ ë‹´ì€ CSV íŒŒì¼")]
     [SerializeField] private TextAsset csvFile;
 
     private readonly Dictionary<string, FishData> fishDataDictionary = new();
@@ -38,13 +38,13 @@ public class FishDataManager : MonoBehaviour
     #region Custom Methods
 
     /// <summary>
-    /// CSV ÆÄÀÏÀ» ÀĞ¾î FishData¸¦ ·ÎµåÇÕ´Ï´Ù.
+    /// CSV íŒŒì¼ì„ ì½ì–´ FishDataë¥¼ ë¡œë“œí•©ë‹ˆë‹¤.
     /// </summary>
     private void LoadCSV()
     {
         if (csvFile == null)
         {
-            Log.Error("[FishDataManager] CSV ÆÄÀÏÀÌ ¿¬°áµÇÁö ¾Ê¾Ò½À´Ï´Ù.", this);
+            Log.Error("[FishDataManager] CSV íŒŒì¼ì´ ì—°ê²°ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.", this);
             return;
         }
 
@@ -52,24 +52,37 @@ public class FishDataManager : MonoBehaviour
 
         for (int i = 1; i < lines.Length; i++)
         {
-            if (string.IsNullOrWhiteSpace(lines[i])) continue;
+            string line = lines[i].Trim();
+            if (string.IsNullOrWhiteSpace(line)) continue;
 
-            string[] columns = lines[i].Trim().Split(',');
+            string[] columns = line.Split(',');
+
+            if (columns.Length < 13)
+            {
+                Log.Warn($"[FishDataManager] ì—´ ê°œìˆ˜ê°€ ë¶€ì¡±í•œ í–‰ì´ ë°œê²¬ë¨ (index: {i})", this);
+                continue;
+            }
 
             string id = columns[0];
             string name = columns[1];
             string explain1 = columns[2];
             string explain2 = columns[3];
             string explain3 = columns[4];
-            int gold = int.Parse(columns[5]);
+            int gold = int.TryParse(columns[5], out int g) ? g : 0;
             string type = columns[6];
-            int puzzle = int.Parse(columns[7]);
+            int puzzle = int.TryParse(columns[7], out int p) ? p : 0;
             string rare = columns[8];
             string fishImg = columns[9];
             string puzzleImg = columns[10];
             string fishCatch = columns[11];
             string fishSprite = columns[12];
-            string puzzleShape = columns.Length > 13 ? columns[13] : "";
+
+            // âœ… puzzleShape: 13ë²ˆì§¸ ì´í›„ ëª¨ë“  ì»¬ëŸ¼ì„ ë‹¤ì‹œ ë¶™ì„ (ì‰¼í‘œ í¬í•¨ ê°€ëŠ¥)
+            string puzzleShape = columns.Length > 13
+                ? string.Join(",", columns, 13, columns.Length - 13).Trim().Trim('"')
+                : "";
+
+            Log.System($"[FishDataManager] {id}ì˜ puzzleShape ì›ë³¸: {puzzleShape}", this);
 
             FishData data = new FishData(id, name, explain1, explain2, explain3,
                                          gold, type, puzzle, rare,
@@ -78,11 +91,11 @@ public class FishDataManager : MonoBehaviour
             fishDataDictionary[id] = data;
         }
 
-        Log.System($"[FishDataManager] {fishDataDictionary.Count}°³ ·Îµå ¿Ï·á", this);
+        Log.System($"[FishDataManager] {fishDataDictionary.Count}ê°œ ë¡œë“œ ì™„ë£Œ", this);
     }
 
     /// <summary>
-    /// Æ¯Á¤ IDÀÇ ¹°°í±â µ¥ÀÌÅÍ¸¦ ¹İÈ¯ÇÕ´Ï´Ù.
+    /// íŠ¹ì • IDì˜ ë¬¼ê³ ê¸° ë°ì´í„°ë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤.
     /// </summary>
     public FishData GetFishData(string id)
     {
@@ -90,37 +103,37 @@ public class FishDataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ÀüÃ¼ ¹°°í±â µ¥ÀÌÅÍ¸¦ ¹İÈ¯ÇÕ´Ï´Ù.
+    /// ì „ì²´ ë¬¼ê³ ê¸° ë°ì´í„°ë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤.
     /// </summary>
     public Dictionary<string, FishData> GetAllFish() => fishDataDictionary;
 
     /// <summary>
-    /// ID·Î ¹°°í±â ÀÌ¸§À» ¹İÈ¯ÇÕ´Ï´Ù.
+    /// IDë¡œ ë¬¼ê³ ê¸° ì´ë¦„ì„ ë°˜í™˜í•©ë‹ˆë‹¤.
     /// </summary>
     public string GetName(string id) => GetFishData(id).name;
 
     /// <summary>
-    /// ID·Î Èñ±Íµµ¸¦ ¹İÈ¯ÇÕ´Ï´Ù.
+    /// IDë¡œ í¬ê·€ë„ë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤.
     /// </summary>
     public string GetRarity(string id) => GetFishData(id).rare;
 
     /// <summary>
-    /// ÇÁ¸®ÆÕ °æ·Î¸¦ ¹İÈ¯ÇÕ´Ï´Ù.
+    /// í”„ë¦¬íŒ¹ ê²½ë¡œë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤.
     /// </summary>
     public string GetPrefabPath(string id) => GetFishData(id).fishImg;
 
     /// <summary>
-    /// ¹°°í±â ÀâÈù ½ºÇÁ¶óÀÌÆ® °æ·Î¸¦ ¹İÈ¯ÇÕ´Ï´Ù.
+    /// ë¬¼ê³ ê¸° ì¡íŒ ìŠ¤í”„ë¼ì´íŠ¸ ê²½ë¡œë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤.
     /// </summary>
     public string GetCatchSprite(string id) => GetFishData(id).fishCatch;
 
     /// <summary>
-    /// ¹°°í±â ÀÌµ¿ ½ºÇÁ¶óÀÌÆ® °æ·Î¸¦ ¹İÈ¯ÇÕ´Ï´Ù.
+    /// ë¬¼ê³ ê¸° ì´ë™ ìŠ¤í”„ë¼ì´íŠ¸ ê²½ë¡œë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤.
     /// </summary>
     public string GetMoveSprite(string id) => GetFishData(id).fishSprite;
 
     /// <summary>
-    /// Resources Æú´õ ±âÁØÀ¸·Î ÇÁ¸®ÆÕÀ» ·ÎµåÇÕ´Ï´Ù.
+    /// Resources í´ë” ê¸°ì¤€ìœ¼ë¡œ í”„ë¦¬íŒ¹ì„ ë¡œë“œí•©ë‹ˆë‹¤.
     /// </summary>
     public GameObject LoadFishPrefab(string id)
     {
@@ -132,7 +145,7 @@ public class FishDataManager : MonoBehaviour
 }
 
 /// <summary>
-/// CSV¿¡¼­ ·ÎµåµÈ ¹°°í±â µ¥ÀÌÅÍ ±¸Á¶Ã¼ÀÔ´Ï´Ù.
+/// CSVì—ì„œ ë¡œë“œëœ ë¬¼ê³ ê¸° ë°ì´í„° êµ¬ì¡°ì²´ì…ë‹ˆë‹¤.
 /// </summary>
 public struct FishData
 {
@@ -149,7 +162,7 @@ public struct FishData
     public string puzzleImg;
     public string fishCatch;
     public string fishSprite;
-    public string puzzleShape; //ÆÛÁñ ¶§¹®¿¡ Ãß°¡ÇÔ.
+    public string puzzleShape; //í¼ì¦ ë•Œë¬¸ì— ì¶”ê°€í•¨.
 
     public FishData(string id, string name, string explain1, string explain2, string explain3,
                     int gold, string type, int puzzle, string rare,

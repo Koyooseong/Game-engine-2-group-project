@@ -30,7 +30,7 @@ public class PuzzleInventoryUI : MonoBehaviour
 
             GameObject itemObj = Instantiate(inventoryItemPrefab, inventoryContentParent);
             PuzzleInventoryItemUI itemUI = itemObj.GetComponent<PuzzleInventoryItemUI>();
-            itemUI.Initialize(fishData, ownedCount);
+            itemUI.Initialize(fishData.id);
         }
     }
 }

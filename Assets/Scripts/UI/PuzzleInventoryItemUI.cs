@@ -1,13 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.EventSystems;
 
 /// <summary>
-/// 퍼즐 씬 인벤토리 슬롯 1개의 UI. 드래그 및 시각 상태를 제어합니다.
+/// 퍼즐 씬 인벤토리 슬롯 1개의 UI. 시각 정보 관리 및 수량 제어를 담당합니다.
 /// </summary>
-public class PuzzleInventoryItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class PuzzleInventoryItemUI : MonoBehaviour
 {
+    #region Variables
+
     [Header("UI Components")]
     [SerializeField] private Image fishImage;
     [SerializeField] private TextMeshProUGUI fishNameText;
@@ -15,60 +16,65 @@ public class PuzzleInventoryItemUI : MonoBehaviour, IBeginDragHandler, IDragHand
     [SerializeField] private TextMeshProUGUI countText;
     [SerializeField] private Image panelBackground;
 
-    [Header("Drag Dependencies")]
-    [SerializeField] private FishBlockBuilder fishBlockBuilder;
-
     private FishData fishData;
-    private int totalCount;
-    private GameObject currentBlock;
-    private RectTransform canvasRect;
+    private int currentCount;
+    private int maxCount;
+    private string fishKey;
 
-    private void Start()
+    #endregion
+
+    #region Public Methods
+
+    /// <summary>
+    /// 인벤토리 슬롯을 해당 키로 초기화합니다.
+    /// </summary>
+    public void Initialize(string key)
     {
-        canvasRect = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
-    }
+        fishKey = key;
+        fishData = FishDataManager.Instance.GetFishData(key);
+        maxCount = currentCount = InventoryManager.Instance.GetCount(key);
 
-    public void Initialize(FishData data, int ownedCount)
-    {
-        fishData = data;
-        totalCount = ownedCount;
+        fishImage.sprite = Resources.Load<Sprite>(fishData.puzzleImg);
+        fishNameText.text = fishData.name;
+        goldText.text = $"{fishData.gold}G / 5s";
+        UpdateCountText();
 
-        fishImage.sprite = Resources.Load<Sprite>(data.puzzleImg);
-        fishNameText.text = data.name;
-        goldText.text = $"{data.gold}G / 5s";
-        countText.text = $"{ownedCount} / {ownedCount}";
-
-        if (ownedCount <= 0)
+        if (currentCount <= 0)
         {
-            panelBackground.color = new Color(1f, 1f, 1f, 0.3f); // 투명도 낮춤
+            panelBackground.color = new Color(1f, 1f, 1f, 0.3f);
         }
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
+    /// <summary>
+    /// 보유 수량이 있다면 1개 소비하고 true 반환, 없으면 false 반환
+    /// </summary>
+    public bool TryConsumeOne()
     {
+        if (currentCount <= 0) return false;
 
-        Debug.Log($"어떤 물고기 드래그 했는지: {fishData.name}");//디버그 테스트
-        if (totalCount <= 0) return;
+        currentCount--;
+        UpdateCountText();
 
-        currentBlock = fishBlockBuilder.Build(fishData); 
-        if (currentBlock != null)
-            currentBlock.transform.SetAsLastSibling(); 
-    }
-
-    public void OnDrag(PointerEventData eventData)
-    {
-        if (currentBlock == null) return;
-
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvasRect, eventData.position, eventData.pressEventCamera, out Vector2 localPos);
-        currentBlock.GetComponent<RectTransform>().anchoredPosition = localPos;
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        if (currentBlock != null)
+        if (currentCount <= 0)
         {
-            Destroy(currentBlock);
+            panelBackground.color = new Color(1f, 1f, 1f, 0.3f);
         }
+
+        return true;
     }
+
+    public FishData GetFishData() => fishData;
+
+    public string GetFishKey() => fishKey;
+
+    #endregion
+
+    #region Private Methods
+
+    private void UpdateCountText()
+    {
+        countText.text = $"{currentCount} / {maxCount}";
+    }
+
+    #endregion
 }

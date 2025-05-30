@@ -1,7 +1,7 @@
 ﻿ID,NAME,EXPLAIN_1,EXPLAIN_2,EXPLAIN_3,GOLD,TYPE,PUZZLE,RARE,FISH_IMG,PUZZLE_IMG,FISH_CATCH,FISH_SPRITE,PUZZLE_SHAPE
 FISH_001,정어리,설명1,설명2,설명3,2,small,2,normal,Prefabs/Fish001_0,Sprites/Fish_Puzzle/Fish001,Sprites/Fish_Catch/Fish001,Sprites/Fish_Move/Fish001,"0,0;1,0"
 FISH_002,해파리,설명1,설명2,설명3,1,small,1,normal,Prefabs/Fish002_0,Sprites/Fish_Puzzle/Fish002,Sprites/Fish_Catch/Fish002,Sprites/Fish_Move/Fish002,"0,0"
-FISH_003,오징어,설명1,설명2,설명3,3,small,3,normal,Prefabs/Fish003_0,Sprites/Fish_Puzzle/Fish003,Sprites/Fish_Catch/Fish003,Sprites/Fish_Move/Fish003,"0,0;1,0;0,1"
+FISH_003,오징어,설명1,설명2,설명3,3,small,3,normal,Prefabs/Fish003_0,Sprites/Fish_Puzzle/Fish003,Sprites/Fish_Catch/Fish003,Sprites/Fish_Move/Fish003,"0,0;0,1;1,1"
 FISH_004,참치,설명1,설명2,설명3,6,middle,6,normal,Prefabs/Fish004_0,Sprites/Fish_Puzzle/Fish004,Sprites/Fish_Catch/Fish004,Sprites/Fish_Move/Fish004,"1,0;2,0;0,1;1,1;2,1;1,2"
 FISH_005,고급 정어리,설명1,설명2,설명3,4,small,2,rare,Prefabs/Fish005_0,Sprites/Fish_Puzzle/Fish005,Sprites/Fish_Catch/Fish005,Sprites/Fish_Move/Fish005,"0,0;1,0"
 FISH_006,참돔,설명1,설명2,설명3,12,middle,6,rare,Prefabs/Fish006_0,Sprites/Fish_Puzzle/Fish006,Sprites/Fish_Catch/Fish006,Sprites/Fish_Move/Fish006,"0,0;1,0;2,0;0,1;1,1;2,1"
