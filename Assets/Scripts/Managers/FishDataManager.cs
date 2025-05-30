@@ -69,10 +69,11 @@ public class FishDataManager : MonoBehaviour
             string puzzleImg = columns[10];
             string fishCatch = columns[11];
             string fishSprite = columns[12];
+            string puzzleShape = columns.Length > 13 ? columns[13] : "";
 
             FishData data = new FishData(id, name, explain1, explain2, explain3,
                                          gold, type, puzzle, rare,
-                                         fishImg, puzzleImg, fishCatch, fishSprite);
+                                         fishImg, puzzleImg, fishCatch, fishSprite, puzzleShape);
 
             fishDataDictionary[id] = data;
         }
@@ -148,10 +149,11 @@ public struct FishData
     public string puzzleImg;
     public string fishCatch;
     public string fishSprite;
+    public string puzzleShape; //퍼즐 때문에 추가함.
 
     public FishData(string id, string name, string explain1, string explain2, string explain3,
                     int gold, string type, int puzzle, string rare,
-                    string fishImg, string puzzleImg, string fishCatch, string fishSprite)
+                    string fishImg, string puzzleImg, string fishCatch, string fishSprite, string puzzleShape)
     {
         this.id = id;
         this.name = name;
@@ -166,5 +168,6 @@ public struct FishData
         this.puzzleImg = puzzleImg;
         this.fishCatch = fishCatch;
         this.fishSprite = fishSprite;
+        this .puzzleShape = puzzleShape;
     }
 }
