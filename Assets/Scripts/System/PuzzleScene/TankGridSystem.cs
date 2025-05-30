@@ -2,8 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// 퍼즐 수조 씬의 격자 셀을 간격 포함하여 생성합니다.
-/// -> 왜 스크립트로 생성했냐면 나중에 10x10로 확장 가능 및 물고리 블록 인식 가능 원활
+/// 퍼즐 수조 씬의 격자 셀을 간격 포함하여 생성하고,
+/// 각 셀을 TankGridManager에 등록합니다.
 /// </summary>
 public class TankGridSystem : MonoBehaviour
 {
@@ -16,7 +16,12 @@ public class TankGridSystem : MonoBehaviour
     [SerializeField] private float cellSize = 86f;
     [SerializeField] private float cellGap = 16f;
 
+    [Header("의존성")]
+    [SerializeField] private TankGridManager gridManager;
+
     private GameObject[,] gridCells;
+
+    private const float CELL_ALPHA_LOCKED = 0.3f;
 
     #endregion
 
@@ -32,10 +37,16 @@ public class TankGridSystem : MonoBehaviour
     #region Custom Methods
 
     /// <summary>
-    /// 간격을 포함하여 9x9 격자 셀을 생성합니다.
+    /// 간격을 포함하여 격자 셀을 생성하고 매니저에 등록합니다.
     /// </summary>
     private void CreateGrid()
     {
+        if (gridManager == null)
+        {
+            Log.Error("[TankGridSystem] TankGridManager가 연결되지 않았습니다", this);
+            return;
+        }
+
         gridCells = new GameObject[gridSize, gridSize];
 
         float totalCellSize = cellSize + cellGap;
@@ -55,8 +66,27 @@ public class TankGridSystem : MonoBehaviour
                 rt.anchoredPosition = new Vector2((x * totalCellSize) - offset, (y * totalCellSize) - offset);
 
                 gridCells[x, y] = cell;
+
+                // TankGridController 연결
+                TankGridController controller = cell.GetComponent<TankGridController>();
+                if (controller == null)
+                {
+                    Log.Error("[TankGridSystem] gridCellPrefab에 TankGridController 없음", cell);
+                    continue;
+                }
+
+                Vector2Int gridPos = new Vector2Int(x, y);
+
+                int center = gridSize / 2;
+                bool isUnlocked = Mathf.Abs(x - center) <= 1 && Mathf.Abs(y - center) <= 1;
+
+
+                controller.Initialize(gridPos, isUnlocked);
+                gridManager.RegisterGrid(gridPos, controller);
             }
         }
+
+        Log.System($"[TankGridSystem] 격자 생성 완료 ({gridSize}x{gridSize})", this);
     }
 
     #endregion
