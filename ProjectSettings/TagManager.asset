@@ -16,6 +16,9 @@ TagManager:
   - GridCell
   - PuzzleInventoryArea
   - FishBlockCell
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
   layers:
   - Default
