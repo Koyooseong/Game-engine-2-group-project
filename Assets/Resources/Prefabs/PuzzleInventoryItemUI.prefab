@@ -459,6 +459,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fishBlockBuilder: {fileID: 5756377820790691914}
+  buttonUIPrefab: {fileID: 2709649901753500269, guid: 625a0a9329f48c0438c33288bc3bcaba, type: 3}
 --- !u!114 &5756377820790691914
 MonoBehaviour:
   m_ObjectHideFlags: 0

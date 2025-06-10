@@ -2,6 +2,7 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 /// <summary>
 /// 퍼즐 씬에서 물고기의 블록 형태를 동적으로 생성해주는 빌더입니다.
@@ -28,7 +29,7 @@ public class FishBlockBuilder : MonoBehaviour
     /// </summary>
     /// <param name="data">물고기 데이터</param>
     /// <returns>생성된 퍼즐 블록 오브젝트</returns>
-    public GameObject Build(FishData data)
+    public GameObject Build(FishData data, PuzzleInventoryItemUI itemUI, GameObject buttonUIPrefab)
     {
         GameObject blockRoot = new GameObject($"Block_{data.name}", typeof(RectTransform));
         blockRoot.transform.SetParent(canvasRect, false);
@@ -97,6 +98,15 @@ public class FishBlockBuilder : MonoBehaviour
 
         // FishBlockHandler 스크립트 부착 (드래그 및 회전/삭제 UI 담당)
         blockRoot.AddComponent<FishBlockHandler>();
+
+
+        FishBlockHandler handler = blockRoot.GetComponent<FishBlockHandler>();
+        if (handler != null)
+        {
+            handler.SetItemUI(itemUI);
+            handler.SetButtonUIPrefab(buttonUIPrefab);
+        }
+
 
 
         return blockRoot;

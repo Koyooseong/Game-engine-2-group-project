@@ -10,6 +10,8 @@ public class FishBlockDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandl
 
     [Header("Drag Dependencies")]
     [SerializeField] private FishBlockBuilder fishBlockBuilder;
+    [SerializeField] private GameObject buttonUIPrefab;
+
 
     private RectTransform canvasRect;
     private PuzzleInventoryItemUI itemUI;
@@ -127,9 +129,19 @@ public class FishBlockDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandl
             return;
         }
 
-        currentBlock = fishBlockBuilder.Build(itemUI.GetFishData());
+        currentBlock = fishBlockBuilder.Build(itemUI.GetFishData(), itemUI, buttonUIPrefab);
         currentBlock.transform.SetParent(canvasRect);
         currentBlock.transform.SetAsLastSibling();
+
+        // 블록 핸들러에 buttonUIPrefab 전달
+        var handler = currentBlock.GetComponent<FishBlockHandler>();
+        if (handler != null)
+        {
+            handler.SetItemUI(itemUI);
+            handler.SetButtonUIPrefab(buttonUIPrefab);
+        }
+
+
     }
 
     /// <summary>

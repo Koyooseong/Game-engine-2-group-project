@@ -49,6 +49,7 @@ public class TankGridManager : MonoBehaviour
 
         gridMap[position] = controller;
         Log.System($"[TankGridManager] ¼¿ µî·ÏµÊ: {position}", this);
+
     }
 
     /// <summary>

@@ -75,6 +75,8 @@ public class TankGridSystem : MonoBehaviour
 
                 bool isUnlocked = Mathf.Abs(x - center.x) <= 1 && Mathf.Abs(y - center.y) <= 1;
 
+                Debug.Log($"[Init] 셀 생성: ({x}, {y}) → 해금 여부: {isUnlocked}");
+
                 controller.Initialize(position, isUnlocked);
                 controller.SetLockSystem(lockSystem);
 
@@ -83,6 +85,7 @@ public class TankGridSystem : MonoBehaviour
         }
 
         Debug.Log($"[TankGridSystem] 격자 생성 완료 ({gridSize}x{gridSize})");
+
     }
 
     #endregion

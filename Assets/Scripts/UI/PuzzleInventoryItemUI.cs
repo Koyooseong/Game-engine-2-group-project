@@ -63,6 +63,20 @@ public class PuzzleInventoryItemUI : MonoBehaviour
         return true;
     }
 
+
+    /// <summary>
+    /// 블록이 삭제되었을 때 수량을 복구합니다.
+    /// </summary>
+    public void RestoreOne()
+    {
+        currentCount++;
+        UpdateCountText();
+        panelBackground.color = new Color(1f, 1f, 1f, 1f); // 다시 밝게
+
+        Debug.Log($"[PuzzleInventoryItemUI] 수량 복구됨 → 현재 수량: {currentCount}");
+    }
+
+
     public FishData GetFishData() => fishData;
 
     public string GetFishKey() => fishKey;

@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class TankGridController : MonoBehaviour
+public class TankGridController : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private Image background;
     [SerializeField] private GameObject lockOverlay;
@@ -61,13 +61,13 @@ public class TankGridController : MonoBehaviour
     public void OnPointerClick(PointerEventData eventData)
     {
 
-        Debug.Log($"클릭됨: {gridPosition}");
+        Debug.Log($"[TankGridController] 클릭됨: {gridPosition}");
+
         if (isUnlocked) return;
 
         if (lockSystem != null)
         {
-
-            Debug.Log("해금 시도 중...");
+            Debug.Log("[TankGridController] 해금 시도 중...");
             lockSystem.TryUnlock(gridPosition);
         }
         else
