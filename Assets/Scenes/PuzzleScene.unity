@@ -872,7 +872,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 810404181}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1288591627}
+        m_TargetAssemblyTypeName: PuzzleSaveSystem, Assembly-CSharp
+        m_MethodName: SaveData
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &810404181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1284,8 +1296,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Save
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: eee0c18c7b4d6a546916e412c305ae74, type: 2}
+  m_sharedMaterial: {fileID: -5973051899501151884, guid: eee0c18c7b4d6a546916e412c305ae74, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1373,6 +1385,7 @@ GameObject:
   - component: {fileID: 1197088234}
   - component: {fileID: 1197088233}
   - component: {fileID: 1197088232}
+  - component: {fileID: 1197088235}
   m_Layer: 5
   m_Name: ClearButton
   m_TagString: Untagged
@@ -1397,7 +1410,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 279, y: 0}
+  m_AnchoredPosition: {x: -432, y: 0}
   m_SizeDelta: {x: 130, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1197088232
@@ -1443,7 +1456,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1197088233}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1197088235}
+        m_TargetAssemblyTypeName: SceneOut, Assembly-CSharp
+        m_MethodName: OnExitPuzzleScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1197088233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1482,6 +1507,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1197088230}
   m_CullTransparentMesh: 1
+--- !u!114 &1197088235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1197088230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33b5c30cb2261b748877238f4e008474, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1253494584
 GameObject:
   m_ObjectHideFlags: 0
@@ -1522,6 +1559,54 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 540, y: 1104, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1288591626
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1288591628}
+  - component: {fileID: 1288591627}
+  m_Layer: 0
+  m_Name: PuzzleSaveSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1288591627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288591626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1750de0809432784790c5f161326eb20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toastUIPrefab: {fileID: 6225366988146605312, guid: 2efd91ddafc26f343811f121cbca02ad, type: 3}
+  fishBlockBuilder: {fileID: 256136257}
+  buttonUIPrefab: {fileID: 2709649901753500269, guid: 625a0a9329f48c0438c33288bc3bcaba, type: 3}
+  toastParent: {fileID: 250819639}
+--- !u!4 &1288591628
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288591626}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 295.46585, y: 881.6405, z: -10.470821}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1854,10 +1939,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Clear
+  m_text: X
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: eee0c18c7b4d6a546916e412c305ae74, type: 2}
+  m_sharedMaterial: {fileID: -5973051899501151884, guid: eee0c18c7b4d6a546916e412c305ae74, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1942,3 +2027,4 @@ SceneRoots:
   - {fileID: 1253494586}
   - {fileID: 90617154}
   - {fileID: 250819639}
+  - {fileID: 1288591628}

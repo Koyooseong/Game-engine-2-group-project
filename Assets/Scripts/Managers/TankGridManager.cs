@@ -1,15 +1,16 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ¸ğµç TankGrid Á¤º¸¸¦ ÀúÀåÇÏ°í °ü¸®ÇÕ´Ï´Ù.
-/// ºí·Ï ¹èÄ¡, Á¦°Å ¹× À§Ä¡ Á¤º¸ ±â·ÏÀ» ´ã´çÇÕ´Ï´Ù.
+/// ëª¨ë“  TankGrid ì •ë³´ë¥¼ ì €ì¥í•˜ê³  ê´€ë¦¬í•©ë‹ˆë‹¤.
+/// ë¸”ë¡ ë°°ì¹˜, ì œê±° ë° ìœ„ì¹˜ ì •ë³´ ê¸°ë¡ì„ ë‹´ë‹¹í•©ë‹ˆë‹¤.
 /// </summary>
 public class TankGridManager : MonoBehaviour
 {
     #region Variables
 
     private Dictionary<Vector2Int, TankGridController> gridMap = new();
+    private Dictionary<Vector2Int, FishBlockHandler> blockMap = new(); // ğŸ†•
 
     public static TankGridManager Instance { get; private set; }
 
@@ -36,59 +37,55 @@ public class TankGridManager : MonoBehaviour
 
     #region Public Methods
 
-    /// <summary>
-    /// ÇØ´ç À§Ä¡¿¡ ±×¸®µå ¼¿À» µî·ÏÇÕ´Ï´Ù.
-    /// </summary>
     public void RegisterGrid(Vector2Int position, TankGridController controller)
     {
         if (gridMap.ContainsKey(position))
         {
-            Log.Warn($"[TankGridManager] Áßº¹ µî·Ï ½Ãµµ: {position}", this);
+            Log.Warn($"[TankGridManager] ì¤‘ë³µ ë“±ë¡ ì‹œë„: {position}", this);
             return;
         }
 
         gridMap[position] = controller;
-        Log.System($"[TankGridManager] ¼¿ µî·ÏµÊ: {position}", this);
-
+        Log.System($"[TankGridManager] ì…€ ë“±ë¡ë¨: {position}", this);
     }
 
-    /// <summary>
-    /// ºí·ÏÀÌ ÇØ´ç À§Ä¡¿¡ ¹èÄ¡µÇ¾úÀ½À» ±â·ÏÇÕ´Ï´Ù.
-    /// </summary>
-    public void SetBlock(Vector2Int position)
+    public void SetBlock(Vector2Int position, FishBlockHandler block)
     {
         if (!gridMap.TryGetValue(position, out var controller))
         {
-            Log.Error($"[TankGridManager] ºí·Ï Ãß°¡ ½ÇÆĞ - ¼¿ ¾øÀ½: {position}", this);
+            Log.Error($"[TankGridManager] ë¸”ë¡ ì¶”ê°€ ì‹¤íŒ¨ - ì…€ ì—†ìŒ: {position}", this);
             return;
         }
 
         controller.SetBlockState(true);
+        blockMap[position] = block;
     }
 
-    /// <summary>
-    /// ºí·ÏÀÌ Á¦°ÅµÇ¾úÀ½À» ±â·ÏÇÕ´Ï´Ù.
-    /// </summary>
     public void ClearBlock(Vector2Int position)
     {
         if (!gridMap.TryGetValue(position, out var controller))
         {
-            Log.Error($"[TankGridManager] ºí·Ï Á¦°Å ½ÇÆĞ - ¼¿ ¾øÀ½: {position}", this);
+            Log.Error($"[TankGridManager] ë¸”ë¡ ì œê±° ì‹¤íŒ¨ - ì…€ ì—†ìŒ: {position}", this);
             return;
         }
 
         controller.SetBlockState(false);
+        blockMap.Remove(position);
     }
 
-    /// <summary>
-    /// ÇØ´ç À§Ä¡ÀÇ ÄÁÆ®·Ñ·¯¸¦ ¹İÈ¯ÇÕ´Ï´Ù.
-    /// </summary>
     public TankGridController GetGrid(Vector2Int position)
     {
         return gridMap.TryGetValue(position, out var grid) ? grid : null;
     }
 
+    public FishBlockHandler GetBlock(Vector2Int position)
+    {
+        return blockMap.TryGetValue(position, out var block) ? block : null;
+    }
+
     public Dictionary<Vector2Int, TankGridController> GetAllGrids() => gridMap;
+
+    public Dictionary<Vector2Int, FishBlockHandler> GetAllBlocks() => blockMap;
 
     public Vector2Int GetNearestGrid(Vector3 worldPos)
     {
@@ -97,8 +94,7 @@ public class TankGridManager : MonoBehaviour
 
         foreach (var pair in gridMap)
         {
-            TankGridController controller = pair.Value;
-            Vector3 cellWorldPos = controller.GetComponent<RectTransform>().position;
+            Vector3 cellWorldPos = pair.Value.GetComponent<RectTransform>().position;
             float distance = Vector3.Distance(worldPos, cellWorldPos);
 
             if (distance < minDistance)

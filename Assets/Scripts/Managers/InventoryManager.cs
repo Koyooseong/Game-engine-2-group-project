@@ -10,7 +10,16 @@ public class InventoryManager : MonoBehaviour
 
     #region Variables
 
+    private const string SAVE_KEY = "InventorySave";
+
     private Dictionary<string, int> fishInventory = new Dictionary<string, int>();
+
+    [System.Serializable]
+    private class InventoryData
+    {
+        public List<string> keys = new();
+        public List<int> counts = new();
+    }
 
     #endregion
 
@@ -21,7 +30,7 @@ public class InventoryManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            // 필요 시 초기화 가능
+            LoadInventory();
         }
         else
         {
@@ -48,6 +57,7 @@ public class InventoryManager : MonoBehaviour
         }
 
         Log.Info($"물고기 추가됨: {key} (총 {fishInventory[key]}개)", this);
+        SaveInventory();
     }
 
     /// <summary>
@@ -67,6 +77,8 @@ public class InventoryManager : MonoBehaviour
             {
                 Log.Info($"물고기 제거됨: {key} (남은 수량: {fishInventory[key]})", this);
             }
+
+            SaveInventory();
         }
     }
 
@@ -84,6 +96,49 @@ public class InventoryManager : MonoBehaviour
     public Dictionary<string, int> InventoryRead()
     {
         return new Dictionary<string, int>(fishInventory); // 복사본 반환 (외부 수정 방지)
+    }
+
+    /// <summary>
+    /// 인벤토리를 PlayerPrefs에 저장합니다.
+    /// </summary>
+    private void SaveInventory()
+    {
+        InventoryData data = new();
+        foreach (var pair in fishInventory)
+        {
+            data.keys.Add(pair.Key);
+            data.counts.Add(pair.Value);
+        }
+
+        string json = JsonUtility.ToJson(data);
+        PlayerPrefs.SetString(SAVE_KEY, json);
+        PlayerPrefs.Save();
+
+        Log.System("[InventoryManager] 인벤토리 저장 완료");
+    }
+
+    /// <summary>
+    /// PlayerPrefs로부터 인벤토리를 불러옵니다.
+    /// </summary>
+    private void LoadInventory()
+    {
+        if (!PlayerPrefs.HasKey(SAVE_KEY))
+        {
+            Log.Warn("[InventoryManager] 저장된 인벤토리 없음");
+            return;
+        }
+
+        string json = PlayerPrefs.GetString(SAVE_KEY);
+        InventoryData data = JsonUtility.FromJson<InventoryData>(json);
+
+        fishInventory.Clear();
+
+        for (int i = 0; i < data.keys.Count; i++)
+        {
+            fishInventory[data.keys[i]] = data.counts[i];
+        }
+
+        Log.System($"[InventoryManager] 인벤토리 불러오기 완료 - {fishInventory.Count}종");
     }
 
     #endregion

@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7b42534b1b0d9b4d8791ceffba4a25e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backgroundImage: {fileID: 1761511210494308720}
+  background: {fileID: 1761511210494308720}
   lockOverlay: {fileID: 2503466103090277789}
 --- !u!61 &8638827819393846713
 BoxCollider2D:

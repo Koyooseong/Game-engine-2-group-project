@@ -1,9 +1,9 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
-/// °İÀÚ À§¿¡ ¹èÄ¡µÈ ÆÛÁñ ºí·ÏÀ» ´Ù½Ã µå·¡±×ÇÏ°Å³ª, È¸Àü/µÚÁı±â/»èÁ¦ UI¸¦ Ç¥½Ã ¹× Ã³¸®ÇÕ´Ï´Ù.
+/// ê²©ì ìœ„ì— ë°°ì¹˜ëœ í¼ì¦ ë¸”ë¡ì„ ë‹¤ì‹œ ë“œë˜ê·¸í•˜ê±°ë‚˜, íšŒì „/ë’¤ì§‘ê¸°/ì‚­ì œ UIë¥¼ í‘œì‹œ ë° ì²˜ë¦¬í•©ë‹ˆë‹¤.
 /// </summary>
 public class FishBlockHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
@@ -16,17 +16,17 @@ public class FishBlockHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
     private Vector2 originalPosition;
 
     private bool isSelected = false;
-    private GameObject buttonUI; // ÃßÈÄ È¸Àü/µÚÁı±â ¹öÆ° ¿¬°á ¿¹Á¤
+    private GameObject buttonUI;
 
-    private static readonly string inventoryAreaTag = "PuzzleInventoryArea"; // »èÁ¦¿ë ¿µ¿ª ÅÂ±×
-    private static readonly string blockCellTag = "FishBlockCell"; // ºí·Ï ¼¿ ÅÂ±×
+    private static readonly string inventoryAreaTag = "PuzzleInventoryArea";
+    private static readonly string blockCellTag = "FishBlockCell";
 
     private bool overlapPreviously = false;
-
     private Vector2Int? previousGridPos = null;
 
-    private PuzzleInventoryItemUI itemUI; // µå·¡±× ½Ã ³Ñ°Ü¹ŞÀº ÀÎº¥Åä¸® Ç×¸ñ ÂüÁ¶
+    private PuzzleInventoryItemUI itemUI;
 
+    private string manualFishKey;
 
     #endregion
 
@@ -56,15 +56,8 @@ public class FishBlockHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
     public void OnPointerClick(PointerEventData eventData)
     {
         isSelected = !isSelected;
-
-        if (isSelected)
-        {
-            ShowButtons();
-        }
-        else
-        {
-            HideButtons();
-        }
+        if (isSelected) ShowButtons();
+        else HideButtons();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -86,11 +79,9 @@ public class FishBlockHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        // °ãÄ§ or Àá±è ¼¿ °¨ÁöµÇ¸é ºí·Ï Á¦°Å
         if (IsOverlapping())
         {
-            Debug.Log("[FishBlockHandler] °ãÄ§ ¶Ç´Â Àá±ä Ä­ À§¿¡ ³õ¿© ºí·Ï Á¦°Å");
-
+            Log.Warn("[FishBlockHandler] ê²¹ì¹¨ ë˜ëŠ” ì ê¸´ ì¹¸ ìœ„ì— ë†“ì—¬ ë¸”ë¡ ì œê±°", this);
             ReturnBlockToInventory();
             Destroy(gameObject);
             return;
@@ -99,11 +90,9 @@ public class FishBlockHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
         if (IsInInventoryArea())
         {
             if (previousGridPos.HasValue)
-            {
                 TankGridManager.Instance.ClearBlock(previousGridPos.Value);
-            }
 
-            Debug.Log("[FishBlockHandler] ÀÎº¥Åä¸®·Î µå·¡±×µÊ - »èÁ¦ Ã³¸®");
+            Log.System("[FishBlockHandler] ì¸ë²¤í† ë¦¬ë¡œ ë“œë˜ê·¸ë¨ - ì‚­ì œ ì²˜ë¦¬", this);
             ReturnBlockToInventory();
             Destroy(gameObject);
             return;
@@ -114,26 +103,22 @@ public class FishBlockHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
 
         if (cell == null || !cell.IsUnlocked())
         {
-            Debug.Log("[FishBlockHandler] À¯È¿ÇÏÁö ¾ÊÀº ¼¿ (Àá±è ¶Ç´Â ¾øÀ½)");
-
-            ReturnBlockToInventory(); // ÀÎº¥Åä¸®·Î ´Ù½Ã º¸³»±â
-            Destroy(gameObject);      // ºí·Ï »èÁ¦
+            Log.Warn("[FishBlockHandler] ìœ íš¨í•˜ì§€ ì•Šì€ ì…€ (ì ê¹€ ë˜ëŠ” ì—†ìŒ)", this);
+            ReturnBlockToInventory();
+            Destroy(gameObject);
             return;
         }
 
         rectTransform.anchoredPosition = cell.GetComponent<RectTransform>().anchoredPosition + new Vector2(0f, 144f);
 
         if (previousGridPos.HasValue)
-        {
             TankGridManager.Instance.ClearBlock(previousGridPos.Value);
-        }
 
-        TankGridManager.Instance.SetBlock(nearestGrid);
+        TankGridManager.Instance.SetBlock(nearestGrid, this); // â¬… í•µì‹¬ ìˆ˜ì •
         previousGridPos = nearestGrid;
 
-        Debug.Log($"[FishBlockHandler] ½º³À ¿Ï·á ¹× µî·Ï: {nearestGrid}");
+        Log.System($"[FishBlockHandler] ìŠ¤ëƒ… ì™„ë£Œ ë° ë“±ë¡: {nearestGrid}", this);
     }
-
 
     #endregion
 
@@ -148,25 +133,15 @@ public class FishBlockHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
 
         BlockButtonUI buttonScript = buttonUI.GetComponent<BlockButtonUI>();
         if (buttonScript != null)
-        {
             buttonScript.Initialize(RotateBlock, FlipBlock);
-            Debug.Log("[FishBlockHandler] ¹öÆ° UI »ı¼º ¹× ÀÌº¥Æ® ¿¬°á ¿Ï·á");
-        }
-        else
-        {
-            Debug.LogWarning("[FishBlockHandler] BlockButtonUI ½ºÅ©¸³Æ®°¡ ÇÁ¸®ÆÕ¿¡ ¾ø½À´Ï´Ù!");
-        }
     }
-
 
     private void HideButtons()
     {
-       
         if (buttonUI != null)
         {
             Destroy(buttonUI);
             buttonUI = null;
-            Debug.Log("[FishBlockHandler] ¹öÆ° UI Á¦°Å ¿Ï·á");
         }
     }
 
@@ -175,23 +150,15 @@ public class FishBlockHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
         itemUI = ui;
     }
 
-    /// <summary>
-    /// ¹öÆ° UI ÇÁ¸®ÆÕÀ» ¼³Á¤ÇÕ´Ï´Ù.
-    /// </summary>
     public void SetButtonUIPrefab(GameObject prefab)
     {
         buttonUIPrefab = prefab;
     }
 
-
-
     private bool IsInInventoryArea()
     {
         Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(canvas.worldCamera, rectTransform.position);
-        PointerEventData pointer = new PointerEventData(EventSystem.current)
-        {
-            position = screenPos
-        };
+        PointerEventData pointer = new PointerEventData(EventSystem.current) { position = screenPos };
 
         var results = new System.Collections.Generic.List<RaycastResult>();
         EventSystem.current.RaycastAll(pointer, results);
@@ -199,24 +166,17 @@ public class FishBlockHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
         {
             if (result.gameObject.CompareTag(inventoryAreaTag)) return true;
         }
+
         return false;
     }
 
     private void ReturnBlockToInventory()
     {
         if (itemUI != null)
-        {
-            itemUI.RestoreOne(); // ÀÎº¥Åä¸® ¼ö·® º¹±¸
-            Debug.Log("[FishBlockHandler] ÀÎº¥Åä¸® ¼ö·® 1°³ º¹±¸ ¿Ï·á");
-        }
-        else
-        {
-            Debug.LogWarning("[FishBlockHandler] itemUI ÂüÁ¶ ¾øÀ½ - ¼ö·® º¹±¸ ½ÇÆĞ");
-        }
+            itemUI.RestoreOne();
     }
 
-
-    private bool IsOverlapping()
+    public bool IsOverlapping()
     {
         var images = GetComponentsInChildren<Image>();
 
@@ -229,40 +189,13 @@ public class FishBlockHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
             {
                 if (hit.transform.IsChildOf(transform)) continue;
 
-
-                // ºí·Ï °ãÄ§ °¨Áö (±âÁ¸ ·ÎÁ÷)
                 if (hit.CompareTag(blockCellTag))
-                {
-                    Debug.Log($"[°ãÄ§ °¨Áö] {hit.name}");
                     return true;
-                }
 
                 TankGridController grid = hit.GetComponent<TankGridController>();
-                
-
-                if (grid != null)
-                {
-                    Vector2Int gridPos = grid.GetGridPosition();
-                    bool unlocked = grid.IsUnlocked();
-
-                    //Debug.Log($"[µğ¹ö±×] ¼¿ À§Ä¡ {gridPos} / ÇØ±İ ¿©ºÎ: {unlocked}");
-
-                    if (!grid.IsUnlocked())
-                    {
-                        Debug.LogWarning($"[Àá±è °İÀÚ °¨Áö] ¡æ {gridPos}");
-                        return true;
-                    }
-                }
-
-
-                if (hit.CompareTag(blockCellTag))
-                {
-                    Debug.Log($"[°ãÄ§ °¨Áö] {hit.name}");
+                if (grid != null && !grid.IsUnlocked())
                     return true;
-                }
             }
-
-
         }
 
         return false;
@@ -274,33 +207,50 @@ public class FishBlockHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
         foreach (var image in highlights)
         {
             if (image.gameObject.name.Contains("Highlight"))
-            {
                 image.gameObject.SetActive(visible);
-                Debug.Log($"[Highlight] {image.name} ¡æ {visible}");
-            }
         }
     }
 
-    /// <summary>
-    /// ºí·ÏÀ» ½Ã°è ¹æÇâÀ¸·Î 90µµ È¸Àü½ÃÅµ´Ï´Ù.
-    /// </summary>
     private void RotateBlock()
     {
         transform.Rotate(0f, 0f, -90f);
-        Debug.Log("[FishBlockHandler] ºí·Ï È¸Àü");
     }
 
-    /// <summary>
-    /// ºí·ÏÀ» ÁÂ¿ì·Î ¹İÀü½ÃÅµ´Ï´Ù.
-    /// </summary>
     private void FlipBlock()
     {
         Vector3 scale = transform.localScale;
         scale.x *= -1;
         transform.localScale = scale;
-        Debug.Log("[FishBlockHandler] ºí·Ï ÁÂ¿ì ¹İÀü");
     }
 
+    /// <summary>
+    /// ì €ì¥ ì‹œ ì‚¬ìš©í•  ë¬¼ê³ ê¸° í‚¤ë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤.
+    /// </summary>
+    public string GetFishKey()
+    {
+        if (itemUI != null) return itemUI.GetFishKey();
+        return manualFishKey;
+    }
+    /// <summary>
+    /// ì €ì¥ëœ ìœ„ì¹˜ë¡œ ê°•ì œ ë°°ì¹˜í•  ë•Œ í˜¸ì¶œë©ë‹ˆë‹¤.
+    /// </summary>
+    public void ForceSnapTo(Vector2Int gridPos)
+    {
+        TankGridController cell = TankGridManager.Instance.GetGrid(gridPos);
+        if (cell == null) return;
+
+        rectTransform.anchoredPosition = cell.GetComponent<RectTransform>().anchoredPosition + new Vector2(0f, 144f);
+
+        TankGridManager.Instance.SetBlock(gridPos, this); // âœ… í•„ìˆ˜ ë“±ë¡
+        previousGridPos = gridPos;
+
+        Log.System($"[FishBlockHandler] ì €ì¥ ë¶ˆëŸ¬ì˜¤ê¸°: ìœ„ì¹˜ ìŠ¤ëƒ… ë° ë“±ë¡ ì™„ë£Œ ({gridPos})", this);
+    }
+
+    public void SetFishIdManually(string fishId)
+    {
+        manualFishKey = fishId;
+    }
 
     #endregion
 }
