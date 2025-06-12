@@ -72,8 +72,10 @@ public class ResultSystem : MonoBehaviour
             Image image = item.GetComponentInChildren<Image>();
             Sprite sprite = Resources.Load<Sprite>(data.fishSprite);
             if (image != null && sprite != null)
+            {
                 image.sprite = sprite;
-
+                image.SetNativeSize();
+            }
             // 새로운 물고기일 경우 텍스트 오브젝트 활성화
             if (!ownedKeys.ContainsKey(key))
             {

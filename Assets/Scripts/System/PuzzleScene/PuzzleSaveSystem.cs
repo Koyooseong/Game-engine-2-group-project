@@ -2,6 +2,7 @@
 using UnityEngine;
 using System;
 using UnityEngine.WSA;
+using TMPro;
 
 public class PuzzleSaveSystem : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class PuzzleSaveSystem : MonoBehaviour
     [SerializeField] private FishBlockBuilder fishBlockBuilder;
     [SerializeField] private GameObject buttonUIPrefab;
     [SerializeField] private Transform toastParent;
+    [SerializeField] private TextMeshProUGUI incomeText;
 
     private GameObject currentToast;
 
@@ -54,7 +56,8 @@ public class PuzzleSaveSystem : MonoBehaviour
         {
             if (block.IsOverlapping())
             {
-                ShowToast("저장 불가 - 겹치거나 잠긴 칸에 물고기가 있어요");
+                ShowToast("저장 불가\n" +
+                    "겹치거나 잠긴 칸에 물고기가 있어요");
                 Log.Error("[Save] 충돌된 블록 존재 - 저장 중단", block);
                 return;
             }
@@ -83,15 +86,37 @@ public class PuzzleSaveSystem : MonoBehaviour
                 if (match != null)
                 {
                     match.fishId = fishId;
+                    var blockTransform = block.GetComponent<RectTransform>();
+                    match.rotationZ = blockTransform.eulerAngles.z;
+                    match.isFlipped = blockTransform.localScale.x < 0;
                     Log.Info($"[Save] 저장됨 - {pos}, {fishId}");
                 }
             }
         }
 
         // Step 3: 저장
+        ShowToast("저장되었습니다");
         string json = JsonUtility.ToJson(saveData);
         PlayerPrefs.SetString(SAVE_KEY, json);
         PlayerPrefs.Save();
+
+        int totalIncomePer5Sec = 0;
+
+        foreach (GridSaveData grid in saveData.gridDataList)
+        {
+            if (string.IsNullOrEmpty(grid.fishId)) continue;
+
+            FishData data = FishDataManager.Instance.GetFishData(grid.fishId);
+            if (string.IsNullOrEmpty(data.id)) continue;
+
+            totalIncomePer5Sec += data.gold;
+        }
+
+        GoldUIManager.Instance.SetIncomePer5Sec(totalIncomePer5Sec);
+        PlayerPrefs.SetInt("IncomePer5Sec", totalIncomePer5Sec);
+        PlayerPrefs.Save();
+        SetIncomeText(totalIncomePer5Sec);
+        Log.System($"[Save] 5초당 골드 수익 계산 완료: {totalIncomePer5Sec}G");
 
         Log.System("[PuzzleSaveSystem] 저장 완료");
     }
@@ -158,6 +183,12 @@ public class PuzzleSaveSystem : MonoBehaviour
                 {
                     handler.SetFishIdManually(data.fishId);
                     handler.ForceSnapTo(data.gridPos);
+                    RectTransform rt = handler.GetComponent<RectTransform>();
+                    rt.rotation = Quaternion.Euler(0f, 0f, data.rotationZ);
+
+                    Vector3 scale = rt.localScale;
+                    scale.x = data.isFlipped ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
+                    rt.localScale = scale;
                     Log.System($"[Load] 블록 위치 스냅 완료: {data.gridPos}");
                 }
                 else
@@ -180,6 +211,22 @@ public class PuzzleSaveSystem : MonoBehaviour
                 Log.Info($"[Load] 해당 셀은 물고기 없음: {data.gridPos}");
             }
         }
+
+        int totalIncomePer5Sec = 0;
+
+        foreach (var data in saveData.gridDataList)
+        {
+            if (string.IsNullOrEmpty(data.fishId)) continue;
+
+            FishData fishData = FishDataManager.Instance.GetFishData(data.fishId);
+            if (string.IsNullOrEmpty(fishData.id)) continue;
+
+            totalIncomePer5Sec += fishData.gold;
+        }
+
+        GoldUIManager.Instance.SetIncomePer5Sec(totalIncomePer5Sec);
+        SetIncomeText(totalIncomePer5Sec);
+        Log.System($"[Load] 수익 총합 UI 반영 완료: {totalIncomePer5Sec}G / 5초");
 
         Log.System("[PuzzleSaveSystem] 저장 데이터 로드 완료");
     }
@@ -205,6 +252,60 @@ public class PuzzleSaveSystem : MonoBehaviour
         Destroy(currentToast, 2f);
     }
 
+    private void SetIncomeText(int gold)
+    {
+        if (incomeText != null)
+            incomeText.text = $"{gold}G / 5s";
+    }
+
+    public void SaveUnlockOnly()
+    {
+        // 🔁 기존 저장된 JSON 불러오기
+        PuzzleSaveData saveData;
+        if (PlayerPrefs.HasKey(SAVE_KEY))
+        {
+            string json = PlayerPrefs.GetString(SAVE_KEY);
+            saveData = JsonUtility.FromJson<PuzzleSaveData>(json);
+            Log.System("[SaveUnlockOnly] 기존 저장 불러오기 성공");
+        }
+        else
+        {
+            saveData = new PuzzleSaveData();
+            Log.Warn("[SaveUnlockOnly] 기존 저장 없음 → 새로 생성");
+        }
+
+        // 🔄 현재 isUnlocked 상태로 덮어쓰기
+        foreach (var gridPair in TankGridManager.Instance.GetAllGrids())
+        {
+            Vector2Int pos = gridPair.Key;
+            TankGridController controller = gridPair.Value;
+
+            GridSaveData existing = saveData.gridDataList.Find(d => d.gridPos == pos);
+            if (existing != null)
+            {
+                existing.isUnlocked = controller.IsUnlocked(); // 🔁 기존에 있으면 업데이트
+            }
+            else
+            {
+                // 🔧 새로 추가된 셀일 경우
+                saveData.gridDataList.Add(new GridSaveData
+                {
+                    gridPos = pos,
+                    isUnlocked = controller.IsUnlocked(),
+                    fishId = "",
+                    rotationZ = 0f,
+                    isFlipped = false
+                });
+            }
+        }
+
+        string updatedJson = JsonUtility.ToJson(saveData);
+        PlayerPrefs.SetString(SAVE_KEY, updatedJson);
+        PlayerPrefs.Save();
+
+        Log.System("[SaveUnlockOnly] 잠금 상태만 업데이트된 저장 완료");
+    }
+
     #endregion
 }
 
@@ -214,6 +315,8 @@ public class GridSaveData
     public Vector2Int gridPos;
     public bool isUnlocked;
     public string fishId;
+    public float rotationZ;      // 추가
+    public bool isFlipped;
 }
 
 [Serializable]

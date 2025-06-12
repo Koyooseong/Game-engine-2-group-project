@@ -1,14 +1,14 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 /// <summary>
-/// Àá±ä TankGrid ¼¿À» ÇØ±İÇÏ°í °ñµå¸¦ Â÷°¨ÇÏ´Â ½Ã½ºÅÛ.
-/// ÇØ±İ ºñ¿ëÀº ¼¿ À§Ä¡¿¡ µû¶ó ´Ù¸§ (5x5, 7x7, 9x9)
+/// ì ê¸´ TankGrid ì…€ì„ í•´ê¸ˆí•˜ê³  ê³¨ë“œë¥¼ ì°¨ê°í•˜ëŠ” ì‹œìŠ¤í…œ.
+/// í•´ê¸ˆ ë¹„ìš©ì€ ì…€ ìœ„ì¹˜ì— ë”°ë¼ ë‹¤ë¦„ (5x5, 7x7, 9x9)
 /// </summary>
 public class TankGridLockSystem : MonoBehaviour
 {
     #region Variables
 
-    [Header("¼³Á¤")]
+    [Header("ì„¤ì •")]
     [SerializeField] private TankGridManager gridManager;
     [SerializeField] private TankGridUnlockPopupUI popupUI;
 
@@ -26,7 +26,7 @@ public class TankGridLockSystem : MonoBehaviour
     #region Public Methods
 
     /// <summary>
-    /// ¼¿ Å¬¸¯ ½Ã ÇØ±İ ½Ãµµ (°ñµå ºÎÁ· °Ë»ç ¹× ÆË¾÷ È£Ãâ)
+    /// ì…€ í´ë¦­ ì‹œ í•´ê¸ˆ ì‹œë„ (ê³¨ë“œ ë¶€ì¡± ê²€ì‚¬ ë° íŒì—… í˜¸ì¶œ)
     /// </summary>
     public void TryUnlock(Vector2Int position)
     {
@@ -37,8 +37,8 @@ public class TankGridLockSystem : MonoBehaviour
 
         if (!GoldManager.Instance.HasEnoughGold(cost))
         {
-            Debug.Log("°ñµå°¡ ºÎÁ·ÇÕ´Ï´Ù.");
-            // TODO: °ñµå ºÎÁ· ÆË¾÷ µû·Î ±¸Çö ½Ã ¿¬°á °¡´É
+            Debug.Log("ê³¨ë“œê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.");
+            // TODO: ê³¨ë“œ ë¶€ì¡± íŒì—… ë”°ë¡œ êµ¬í˜„ ì‹œ ì—°ê²° ê°€ëŠ¥
             return;
         }
 
@@ -46,7 +46,7 @@ public class TankGridLockSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// ÆË¾÷¿¡¼­ [¿¹] ¹öÆ° ´­·¶À» ¶§ È£ÃâµÊ
+    /// íŒì—…ì—ì„œ [ì˜ˆ] ë²„íŠ¼ ëˆŒë €ì„ ë•Œ í˜¸ì¶œë¨
     /// </summary>
     public void ConfirmUnlock(Vector2Int position)
     {
@@ -57,7 +57,14 @@ public class TankGridLockSystem : MonoBehaviour
         GoldManager.Instance.RemoveGold(cost);
         cell.Unlock();
 
-        Debug.Log($"[TankGridLockSystem] ÇØ±İ ¿Ï·á: {position}, ºñ¿ë: {cost}G");
+        Log.System($"[TankGridLockSystem] í•´ê¸ˆ ì™„ë£Œ: {position}, ë¹„ìš©: {cost}G");
+
+        // âœ… í•´ê¸ˆë§Œ ì €ì¥ í˜¸ì¶œ
+        PuzzleSaveSystem saveSystem = FindObjectOfType<PuzzleSaveSystem>();
+        if (saveSystem != null)
+        {
+            saveSystem.SaveUnlockOnly();
+        }
     }
 
     #endregion
@@ -65,7 +72,7 @@ public class TankGridLockSystem : MonoBehaviour
     #region Private Methods
 
     /// <summary>
-    /// ¼¿ À§Ä¡¿¡ µû¸¥ ÇØ±İ ºñ¿ë °è»ê (Áß¾Ó ±âÁØ °Å¸® ±â¹İ)
+    /// ì…€ ìœ„ì¹˜ì— ë”°ë¥¸ í•´ê¸ˆ ë¹„ìš© ê³„ì‚° (ì¤‘ì•™ ê¸°ì¤€ ê±°ë¦¬ ê¸°ë°˜)
     /// </summary>
     private int GetUnlockCost(Vector2Int position)
     {

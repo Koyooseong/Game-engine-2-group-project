@@ -1,7 +1,7 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 /// <summary>
-/// °ñµå ÀçÈ­¸¦ Àü¿ª¿¡¼­ °ü¸®ÇÏ´Â ¸Å´ÏÀúÀÔ´Ï´Ù.
+/// ê³¨ë“œ ì¬í™”ë¥¼ ì „ì—­ì—ì„œ ê´€ë¦¬í•˜ëŠ” ë§¤ë‹ˆì €ì…ë‹ˆë‹¤.
 /// </summary>
 public class GoldManager : MonoBehaviour
 {
@@ -9,6 +9,7 @@ public class GoldManager : MonoBehaviour
 
     #region Variables
 
+    private const string GOLD_SAVE_KEY = "GoldSaveKey";
     private int gold = 0;
 
     #endregion
@@ -20,7 +21,7 @@ public class GoldManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            // DontDestroyOnLoad(gameObject); // ¿øÇÒ °æ¿ì Ãß°¡ °¡´É
+            LoadGold(); // âœ… ì‹œì‘ ì‹œ ë¡œë“œ
         }
         else
         {
@@ -33,26 +34,30 @@ public class GoldManager : MonoBehaviour
     #region Custom Methods
 
     /// <summary>
-    /// °ñµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+    /// ê³¨ë“œë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
     /// </summary>
     public void AddGold(int amount)
     {
         gold += amount;
-        Log.Info($"°ñµå Áõ°¡: +{amount} ¡æ ÃÑ {gold}G", this);
+        Log.Info($"ê³¨ë“œ ì¦ê°€: +{amount} â†’ ì´ {gold}G", this);
+        GoldUIManager.Instance?.UpdateCurrentGoldUI(gold);
+        SaveGold(); // âœ… ë³€ê²½ ì‹œ ì €ì¥
     }
 
     /// <summary>
-    /// °ñµå¸¦ °¨¼Ò½ÃÅµ´Ï´Ù. (0º¸´Ù ÀÛ¾ÆÁöÁö ¾ÊÀ½)
+    /// ê³¨ë“œë¥¼ ê°ì†Œì‹œí‚µë‹ˆë‹¤. (0ë³´ë‹¤ ì‘ì•„ì§€ì§€ ì•ŠìŒ)
     /// </summary>
     public void RemoveGold(int amount)
     {
         gold -= amount;
         if (gold < 0) gold = 0;
-        Log.Info($"°ñµå °¨¼Ò: -{amount} ¡æ ÃÑ {gold}G", this);
+        Log.Info($"ê³¨ë“œ ê°ì†Œ: -{amount} â†’ ì´ {gold}G", this);
+        GoldUIManager.Instance?.UpdateCurrentGoldUI(gold);
+        SaveGold(); // âœ… ë³€ê²½ ì‹œ ì €ì¥
     }
 
     /// <summary>
-    /// ÇöÀç º¸À¯ °ñµå¸¦ ¹İÈ¯ÇÕ´Ï´Ù.
+    /// í˜„ì¬ ë³´ìœ  ê³¨ë“œë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤.
     /// </summary>
     public int GetGold()
     {
@@ -60,13 +65,31 @@ public class GoldManager : MonoBehaviour
     }
 
     /// <summary>
-    /// °ñµå°¡ ÃæºĞÇÑÁö °Ë»çÇÕ´Ï´Ù.
+    /// ê³¨ë“œê°€ ì¶©ë¶„í•œì§€ ê²€ì‚¬í•©ë‹ˆë‹¤.
     /// </summary>
     public bool HasEnoughGold(int amount)
     {
         return gold >= amount;
     }
 
+    /// <summary>
+    /// ê³¨ë“œë¥¼ ì €ì¥í•©ë‹ˆë‹¤.
+    /// </summary>
+    private void SaveGold()
+    {
+        PlayerPrefs.SetInt(GOLD_SAVE_KEY, gold);
+        PlayerPrefs.Save();
+        Log.System($"[GoldManager] ê³¨ë“œ ì €ì¥ë¨: {gold}G");
+    }
+
+    /// <summary>
+    /// ì €ì¥ëœ ê³¨ë“œë¥¼ ë¶ˆëŸ¬ì˜µë‹ˆë‹¤.
+    /// </summary>
+    private void LoadGold()
+    {
+        gold = PlayerPrefs.GetInt(GOLD_SAVE_KEY, 0);
+        Log.System($"[GoldManager] ê³¨ë“œ ë¡œë“œë¨: {gold}G");
+    }
 
     #endregion
 }

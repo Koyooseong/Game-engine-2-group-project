@@ -47,6 +47,11 @@ public class PresentManager : MonoBehaviour
             {
                 collectionUI.ShowRedDot(fishKey);
             }
+            else
+            {
+                // 꺼주는 함수도 추가 필요
+                collectionUI.HideRedDot(fishKey);
+            }
         }
     }
 

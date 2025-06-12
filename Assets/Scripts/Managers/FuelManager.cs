@@ -183,5 +183,16 @@ public class FuelManager : MonoBehaviour, IInitializable
         return currentFuelTime;
     }
 
+    public void OnPause()
+    {
+        StopBlinkIfNeeded(); // 깜빡임 정지
+    }
+
+    public void OnResume()
+    {
+        UpdateFuelUI(); // 연료량에 따라 깜빡임 다시 시작 여부 판단
+    }
+
+
     #endregion
 }

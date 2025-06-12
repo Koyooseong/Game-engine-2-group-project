@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: 0de17d1c47095b94988c44d57d3c44ba
+guid: e4e0654477a2dcf45bc42492eb1e1835
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7400487836244456041
-    second: bigfish_catch_0
+      213: 8502983211428982917
+    second: rareStripedMar_catched_0
+  - first:
+      213: 7840181313387850477
+    second: rareStripedMar_catched_1
+  - first:
+      213: -3921455367559177517
+    second: rareStripedMar_catched_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,23 +145,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bigfish_catch_0
+      name: rareStripedMar_catched_1
       rect:
         serializedVersion: 2
-        x: 3
+        x: 1
         y: 0
-        width: 77
-        height: 260
+        width: 123
+        height: 350
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 96233f34a70d3b660800000000000000
-      internalID: 7400487836244456041
+      spriteID: dea632f8d5bedcc60800000000000000
+      internalID: 7840181313387850477
       vertices: []
       indices: 
       edges: []
@@ -164,7 +170,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: f86300bdd897e6e47abf9b4f82596bdc
     internalID: 0
     vertices: []
     indices: 
@@ -174,7 +180,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      bigfish_catch_0: 7400487836244456041
+      rareStripedMar_catched_0: 8502983211428982917
+      rareStripedMar_catched_1: 7840181313387850477
+      rareStripedMar_catched_2: -3921455367559177517
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

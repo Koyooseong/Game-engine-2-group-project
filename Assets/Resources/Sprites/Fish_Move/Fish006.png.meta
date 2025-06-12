@@ -1,22 +1,22 @@
 fileFormatVersion: 2
-guid: 82c2e72df295e104ba62bce2b32f5054
+guid: 6522495df0d16e94f9d58cff24ee3ab4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2381068728312450369
-    second: Fish001_0
+      213: -1774430799823802967
+    second: doom_moving_0
   - first:
-      213: 3081903438262570670
-    second: Fish001_1
+      213: -2922185326995654634
+    second: doom_moving_1
   - first:
-      213: 2732775306451249794
-    second: Fish001_2
+      213: 965377505949035992
+    second: doom_moving_2
   - first:
-      213: 2455616125540040230
-    second: Fish001_3
+      213: 1833516397004811985
+    second: doom_moving_3
   - first:
-      213: 2512691431024697689
-    second: Fish001_4
+      213: 5812205051983759333
+    second: doom_moving_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -151,57 +151,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Fish001_0
+      name: doom_moving_0
       rect:
         serializedVersion: 2
-        x: 17
-        y: 3
-        width: 66
-        height: 141
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: fb235276b9eb4fed0800000000000000
-      internalID: -2381068728312450369
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Fish001_1
-      rect:
-        serializedVersion: 2
-        x: 111
-        y: 3
-        width: 63
-        height: 140
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: eae02b539de15ca20800000000000000
-      internalID: 3081903438262570670
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Fish001_2
-      rect:
-        serializedVersion: 2
-        x: 206
+        x: 29
         y: 0
-        width: 49
-        height: 144
+        width: 66
+        height: 177
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -210,20 +166,86 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 28a6cff89a4cce520800000000000000
-      internalID: 2732775306451249794
+      spriteID: 9ad6df1c694ff57e0800000000000000
+      internalID: -1774430799823802967
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fish001_3
+      name: doom_moving_1
       rect:
         serializedVersion: 2
-        x: 273
+        x: 154
+        y: 0
+        width: 63
+        height: 177
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 618b0907def4277d0800000000000000
+      internalID: -2922185326995654634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: doom_moving_2
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 0
+        width: 73
+        height: 178
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ddae341ab5b56d00800000000000000
+      internalID: 965377505949035992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: doom_moving_3
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 3
+        width: 73
+        height: 173
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1de635dd275f17910800000000000000
+      internalID: 1833516397004811985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: doom_moving_4
+      rect:
+        serializedVersion: 2
+        x: 500
         y: 1
-        width: 64
-        height: 141
+        width: 86
+        height: 175
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -232,30 +254,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 62ef8831bd9141220800000000000000
-      internalID: 2455616125540040230
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Fish001_4
-      rect:
-        serializedVersion: 2
-        x: 376
-        y: 2
-        width: 55
-        height: 142
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 95125603b8fded220800000000000000
-      internalID: 2512691431024697689
+      spriteID: 5e7093d43b919a050800000000000000
+      internalID: 5812205051983759333
       vertices: []
       indices: 
       edges: []
@@ -274,11 +274,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Fish001_0: -2381068728312450369
-      Fish001_1: 3081903438262570670
-      Fish001_2: 2732775306451249794
-      Fish001_3: 2455616125540040230
-      Fish001_4: 2512691431024697689
+      doom_moving_0: -1774430799823802967
+      doom_moving_1: -2922185326995654634
+      doom_moving_2: 965377505949035992
+      doom_moving_3: 1833516397004811985
+      doom_moving_4: 5812205051983759333
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

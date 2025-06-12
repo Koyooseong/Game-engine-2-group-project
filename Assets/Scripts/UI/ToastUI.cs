@@ -50,17 +50,7 @@ public class ToastUI : MonoBehaviour
     public void Show(string message, Color color)
     {
         if (messageText != null)
-        {
             messageText.text = message;
-            messageText.color = color;
-        }
-
-        if (backgroundImage != null)
-        {
-            Color bgColor = color;
-            bgColor.a = 0.25f;
-            backgroundImage.color = bgColor;
-        }
 
         timer = 0f;
     }

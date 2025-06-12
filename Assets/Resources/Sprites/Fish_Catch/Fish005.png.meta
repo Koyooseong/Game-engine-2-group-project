@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 330de135f0232844db9fbab177bed3f8
+guid: 10e52d5b5495fe64785f10d60fad5cfb
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7400487836244456041
-    second: bigfish_catch_0
+      213: -8701059374944216014
+    second: rare_jangarii_catched_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bigfish_catch_0
+      name: rare_jangarii_catched_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 0
-        width: 77
-        height: 260
+        x: 0
+        y: 1
+        width: 89
+        height: 148
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 96233f34a70d3b660800000000000000
-      internalID: 7400487836244456041
+      spriteID: 23c1ed24990af3780800000000000000
+      internalID: -8701059374944216014
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      bigfish_catch_0: 7400487836244456041
+      rare_jangarii_catched_0: -8701059374944216014
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,27 +1,27 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// ³×Æ®ÀÇ ¹ß»ç Äğ´Ù¿î°ú Ç®¸µ, Å©±â ±â¹İ ÀÌµ¿ ¹üÀ§¸¦ Á¦¾îÇÏ´Â ¸Å´ÏÀúÀÔ´Ï´Ù.
+/// ë„¤íŠ¸ì˜ ë°œì‚¬ ì¿¨ë‹¤ìš´ê³¼ í’€ë§, í¬ê¸° ê¸°ë°˜ ì´ë™ ë²”ìœ„ë¥¼ ì œì–´í•˜ëŠ” ë§¤ë‹ˆì €ì…ë‹ˆë‹¤.
 /// </summary>
 public class NetLauncherManager : MonoBehaviour
 {
     #region Variables
 
-    [Header("¹ß»ç À§Ä¡")]
-    [Tooltip("Àá¼öÇÔ¿¡¼­ ³×Æ®°¡ »ı¼ºµÉ À§Ä¡")]
+    [Header("ë°œì‚¬ ìœ„ì¹˜")]
+    [Tooltip("ì ìˆ˜í•¨ì—ì„œ ë„¤íŠ¸ê°€ ìƒì„±ë  ìœ„ì¹˜")]
     [SerializeField] private Transform launchPoint;
 
-    [Header("¿ÀºêÁ§Æ® Ç®")]
-    [Tooltip("³×Æ®¸¦ »ı¼º/°ü¸®ÇÒ ¿ÀºêÁ§Æ® Ç®")]
+    [Header("ì˜¤ë¸Œì íŠ¸ í’€")]
+    [Tooltip("ë„¤íŠ¸ë¥¼ ìƒì„±/ê´€ë¦¬í•  ì˜¤ë¸Œì íŠ¸ í’€")]
     [SerializeField] private ObjectPool netPool;
 
-    [Header("Á¶ÀÌ½ºÆ½ ÂüÁ¶")]
-    [Tooltip("¿À¸¥ÂÊ VirtualJoystick ÀÎ½ºÅÏ½º")]
+    [Header("ì¡°ì´ìŠ¤í‹± ì°¸ì¡°")]
+    [Tooltip("ì˜¤ë¥¸ìª½ VirtualJoystick ì¸ìŠ¤í„´ìŠ¤")]
     [SerializeField] private VirtualJoystick rightJoystick;
 
-    [Header("ÇÈ¼¿ ¡æ ½ºÄÉÀÏ º¯È¯ ºñÀ²")]
-    [Tooltip("40px = scale 1.0 ±âÁØÀÏ °æ¿ì 1 / 40 = 0.025")]
+    [Header("í”½ì…€ â†’ ìŠ¤ì¼€ì¼ ë³€í™˜ ë¹„ìœ¨")]
+    [Tooltip("40px = scale 1.0 ê¸°ì¤€ì¼ ê²½ìš° 1 / 40 = 0.025")]
     [SerializeField] private float pixelToScaleRatio = 1f / 40f;
 
     private float cooldownTime;
@@ -44,7 +44,7 @@ public class NetLauncherManager : MonoBehaviour
     #region Custom Methods
 
     /// <summary>
-    /// Á¶ÀÌ½ºÆ½ ÀÔ·Â ÇØÁ¦ ½Ã ¹ß»ç¸¦ ½ÃµµÇÕ´Ï´Ù.
+    /// ì¡°ì´ìŠ¤í‹± ì…ë ¥ í•´ì œ ì‹œ ë°œì‚¬ë¥¼ ì‹œë„í•©ë‹ˆë‹¤.
     /// </summary>
     private void HandleJoystickReleased(Vector2 direction)
     {
@@ -52,7 +52,7 @@ public class NetLauncherManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Á¶ÀÌ½ºÆ½ ÀÔ·Â ¹æÇâÀ¸·Î ³×Æ®¸¦ ¹ß»çÇÕ´Ï´Ù.
+    /// ì¡°ì´ìŠ¤í‹± ì…ë ¥ ë°©í–¥ìœ¼ë¡œ ë„¤íŠ¸ë¥¼ ë°œì‚¬í•©ë‹ˆë‹¤.
     /// </summary>
     public void TryLaunch(Vector2 direction)
     {
@@ -75,7 +75,7 @@ public class NetLauncherManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Äğ´Ù¿î µ¿¾È Á¶ÀÌ½ºÆ½À» Àá±×°í ÀÔ·ÂÀ» ¸·½À´Ï´Ù.
+    /// ì¿¨ë‹¤ìš´ ë™ì•ˆ ì¡°ì´ìŠ¤í‹±ì„ ì ê·¸ê³  ì…ë ¥ì„ ë§‰ìŠµë‹ˆë‹¤.
     /// </summary>
     private IEnumerator ShowCooldownUI()
     {
@@ -83,6 +83,13 @@ public class NetLauncherManager : MonoBehaviour
 
         while (Time.time < nextFireTime)
         {
+            // âœ… ì¼ì‹œì •ì§€ ì¤‘ì´ë©´ ì¿¨ë‹¤ìš´ ê³„ì‚° ë©ˆì¶¤
+            if (PauseSystem.Instance != null && PauseSystem.Instance.IsPaused())
+            {
+                yield return null;
+                continue;
+            }
+
             float remaining = nextFireTime - Time.time;
             rightJoystick.UpdateCooldownText(remaining);
             yield return null;

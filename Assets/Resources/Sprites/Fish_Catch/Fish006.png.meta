@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: 40e315e247e9e3d4ba28bee3e0acdf9d
+guid: fc5c4c3065308a24cb213f7926b944bd
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7400487836244456041
-    second: bigfish_catch_0
+      213: -1417455081912456534
+    second: doom_catched_0
+  - first:
+      213: 6642036924090178237
+    second: doom_catched_1
+  - first:
+      213: 4997611464948826366
+    second: doom_catched_2
+  - first:
+      213: 6867355522251811429
+    second: doom_catched_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,23 +148,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bigfish_catch_0
+      name: doom_catched_2
       rect:
         serializedVersion: 2
-        x: 3
+        x: 0
         y: 0
-        width: 77
-        height: 260
+        width: 120
+        height: 180
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 96233f34a70d3b660800000000000000
-      internalID: 7400487836244456041
+      spriteID: ef0c1bd16251b5540800000000000000
+      internalID: 4997611464948826366
       vertices: []
       indices: 
       edges: []
@@ -164,7 +173,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 155723a34317e654bbdc35fe9fc0d864
     internalID: 0
     vertices: []
     indices: 
@@ -174,7 +183,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      bigfish_catch_0: 7400487836244456041
+      doom_catched_0: -1417455081912456534
+      doom_catched_1: 6642036924090178237
+      doom_catched_2: 4997611464948826366
+      doom_catched_3: 6867355522251811429
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

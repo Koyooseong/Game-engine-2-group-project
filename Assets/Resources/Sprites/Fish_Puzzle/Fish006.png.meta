@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: bd780a3e40fb8144cb1a8ba5065f512a
+guid: 85e8a341e0740204d9082bc8ade4aebd
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2381068728312450369
-    second: Fish001_0
+      213: -8723200893842719796
+    second: doom_puzzle_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,7 +139,51 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
+      name: Fish006_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 306
+        height: 204
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ccb722a2107f0f680800000000000000
+      internalID: -8723200893842719796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: FISH006_0_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 102
+        width: 102
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f29d27ee299ced44c9b071efaa550b0d
+      internalID: -247360505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FISH006_0_1
       rect:
         serializedVersion: 2
         x: 0
@@ -152,16 +196,38 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: fb235276b9eb4fed0800000000000000
-      internalID: -2381068728312450369
+      spriteID: 4df9ac05cb5eedb49a900f39753c1c6f
+      internalID: 1905828906
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
       name: FISH006_1_0
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 102
+        width: 102
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45c14d09165e53d4dbeae5da497082cd
+      internalID: -1525218120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FISH006_1_1
       rect:
         serializedVersion: 2
         x: 102
@@ -176,19 +242,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3972e8b763fb4b046abd7b70a2c1742c
-      internalID: 1935855429
+      spriteID: 1df1066d46df62c4db7a73f811da77d3
+      internalID: 1474329129
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fish006_0
+      name: FISH006_2_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 204
+        x: 204
+        y: 102
+        width: 102
         height: 102
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -198,8 +264,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eb10f74c630ba24478428ee3cd96baa2
-      internalID: 13102775
+      spriteID: 0dbbca525f40d534b9fd3c971b675016
+      internalID: -1770928829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FISH006_2_1
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 0
+        width: 102
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 756d17e352f951447820fc57e31068a6
+      internalID: 1197260931
       vertices: []
       indices: 
       edges: []
@@ -208,7 +296,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 465ae436aec34ed46a0c20f2c9f77db4
+    spriteID: a653495aef8fc554a9bf58fa2d24a609
     internalID: 0
     vertices: []
     indices: 
@@ -218,9 +306,13 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      FISH006_0_0: -2381068728312450369
-      FISH006_1_0: 1935855429
-      Fish006_0: 13102775
+      FISH006_0_0: -247360505
+      FISH006_0_1: 1905828906
+      FISH006_1_0: -1525218120
+      FISH006_1_1: 1474329129
+      FISH006_2_0: -1770928829
+      FISH006_2_1: 1197260931
+      Fish006_0: -8723200893842719796
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

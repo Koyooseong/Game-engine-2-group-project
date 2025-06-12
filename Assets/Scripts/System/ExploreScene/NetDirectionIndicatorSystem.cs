@@ -15,7 +15,7 @@ public class NetDirectionIndicatorSystem : MonoBehaviour
     [Tooltip("오른쪽 VirtualJoystick 인스턴스")]
     [SerializeField] private VirtualJoystick rightJoystick;
 
-    const float offset = -125f; // 오른쪽 → 위쪽으로 보정
+    const float offset = -90f; // 오른쪽 → 위쪽으로 보정
 
     #endregion
 

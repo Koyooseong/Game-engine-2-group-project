@@ -63,6 +63,9 @@ public class PauseSystem : MonoBehaviour, IInitializable
         foreach (var script in pauseTargets)
         {
             script.enabled = false;
+
+            if (script is FuelManager fm)
+                fm.OnPause();
         }
 
         isPaused = true;
@@ -79,6 +82,9 @@ public class PauseSystem : MonoBehaviour, IInitializable
         foreach (var script in pauseTargets)
         {
             script.enabled = true;
+
+            if (script is FuelManager fm)
+                fm.OnResume();
         }
 
         isPaused = false;

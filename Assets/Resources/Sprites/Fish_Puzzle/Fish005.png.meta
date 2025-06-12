@@ -139,6 +139,28 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
+      name: Fish005_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 204
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0abdc185e16f91eb0800000000000000
+      internalID: -4748493721897739360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: FISH005_0_0
       rect:
         serializedVersion: 2
@@ -152,10 +174,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 0abdc185e16f91eb0800000000000000
-      internalID: -4748493721897739360
+      spriteID: cb79d13e744c39245afeef642b376539
+      internalID: 593864912
       vertices: []
       indices: 
       edges: []
@@ -176,30 +198,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 845b89130bbb20a41ae53e6b4fdfcd0c
-      internalID: -694549839
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Fish005_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 204
-        height: 102
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c217f67bbb0045e42ae473641c594569
-      internalID: -942061596
+      spriteID: e386a1a65fde1904aaa4fb635f0ed29e
+      internalID: -1515917940
       vertices: []
       indices: 
       edges: []
@@ -208,7 +208,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: d380ec2b62ec1ee4aa116171e5e711f4
+    spriteID: 95d3c8fc87bb86440a3072bb8665c27b
     internalID: 0
     vertices: []
     indices: 
@@ -218,9 +218,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      FISH005_0_0: -4748493721897739360
-      FISH005_1_0: -694549839
-      Fish005_0: -942061596
+      FISH005_0_0: 593864912
+      FISH005_1_0: -1515917940
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 2ed73d1d0ff8cf94498fdcff43807aa9
+guid: 805da1e50bff3744fad913c270303c8a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2381068728312450369
-    second: Fish001_0
+      213: 7551149867764455826
+    second: Squid_L_puzzle_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: FISH010_0_0
+      name: Fish010_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 102
-        height: 102
+        width: 510
+        height: 306
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,14 +154,80 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fb235276b9eb4fed0800000000000000
-      internalID: -2381068728312450369
+      spriteID: 29996d90cc21bc860800000000000000
+      internalID: 7551149867764455826
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
       name: FISH010_0_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 102
+        width: 102
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad98e14e7376b1c49963638e3ff1daaa
+      internalID: -1278296981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FISH010_1_0
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 204
+        width: 102
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ae8098f015932c46b3585a974cd0090
+      internalID: 2012536612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FISH010_1_1
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 102
+        width: 102
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f327e3e355e570448e1a2141b805034
+      internalID: 717128882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FISH010_1_2
       rect:
         serializedVersion: 2
         x: 102
@@ -176,19 +242,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9ab9cc512e9aca145a375daf2c3908c9
-      internalID: -1208482284
+      spriteID: 224757a467419d24eabcd5bd4b6b400e
+      internalID: 1891391742
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fish010
+      name: FISH010_2_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 204
+        x: 204
+        y: 102
+        width: 102
         height: 102
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -198,8 +264,96 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 97040357af7f20244b70ddc29c48435d
-      internalID: -1510151438
+      spriteID: d38ff2b05bbcb854485f8b67d186b1df
+      internalID: -765571771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FISH010_3_0
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 204
+        width: 102
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec911f8d4eb0db744b9a2298a9273be4
+      internalID: 358024924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FISH010_4_1
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 102
+        width: 102
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 097d2d40ac7e9a74e90dcb9c54027b59
+      internalID: -63729511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FISH010_3_1
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 102
+        width: 102
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cdeffaf0ca1baa04eb5dd91897d1c58a
+      internalID: -2050735009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FISH010_3_2
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 0
+        width: 102
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03b87e2af2b2cc745a55b121a2e37110
+      internalID: -1839899820
       vertices: []
       indices: 
       edges: []
@@ -208,7 +362,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: a01137280257806469ef8ba9f67fb83d
+    spriteID: 055a2e33955e4a540a8f9df8edb2de79
     internalID: 0
     vertices: []
     indices: 
@@ -218,9 +372,16 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      FISH010_0_0: -2381068728312450369
-      FISH010_0_1: -1208482284
-      Fish010: -1510151438
+      FISH010_0_1: -1278296981
+      FISH010_1_0: 2012536612
+      FISH010_1_1: 717128882
+      FISH010_1_2: 1891391742
+      FISH010_2_1: -765571771
+      FISH010_3_0: 358024924
+      FISH010_3_1: -2050735009
+      FISH010_3_2: -1839899820
+      FISH010_4_1: -63729511
+      Fish010_0: 7551149867764455826
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

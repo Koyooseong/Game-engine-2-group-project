@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 47bf77c23f7a859428040430cdc92a22
+guid: 5efe674202dd5c14bb22a7d49c09d0df
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7400487836244456041
-    second: bigfish_catch_0
+      213: -741671244464139265
+    second: Squid_L_catched_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bigfish_catch_0
+      name: Squid_L_catched_0
       rect:
         serializedVersion: 2
-        x: 3
+        x: 0
         y: 0
-        width: 77
-        height: 260
+        width: 150
+        height: 350
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 96233f34a70d3b660800000000000000
-      internalID: 7400487836244456041
+      spriteID: ff3d795ceed05b5f0800000000000000
+      internalID: -741671244464139265
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      bigfish_catch_0: 7400487836244456041
+      Squid_L_catched_0: -741671244464139265
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

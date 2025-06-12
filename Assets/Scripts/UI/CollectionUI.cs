@@ -55,6 +55,8 @@ public class CollectionUI : MonoBehaviour
 
             if (isCaught)
             {
+                caughtCount++;
+
                 string spritePath = FishDataManager.Instance.GetMoveSprite(fishUI.fishKey);
                 Sprite fishSprite = Resources.Load<Sprite>(spritePath);
                 fishUI.fishImage.sprite = fishSprite;
@@ -71,7 +73,7 @@ public class CollectionUI : MonoBehaviour
             }
 
             // red dot 초기값은 모두 꺼둔다 (PresentManager가 필요한 것만 다시 켤 것)
-            fishUI.redDot.SetActive(false);
+            //fishUI.redDot.SetActive(false);
         }
 
         int rate = Mathf.FloorToInt((caughtCount / (float)totalCount) * 100f);
@@ -89,6 +91,18 @@ public class CollectionUI : MonoBehaviour
             if (fishUI.fishKey == fishKey)
             {
                 fishUI.redDot.SetActive(true);
+                break;
+            }
+        }
+    }
+
+    public void HideRedDot(string fishKey)
+    {
+        foreach (var fishUI in fishUIList)
+        {
+            if (fishUI.fishKey == fishKey)
+            {
+                fishUI.redDot.SetActive(false);
                 break;
             }
         }

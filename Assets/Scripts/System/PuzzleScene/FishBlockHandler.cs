@@ -214,6 +214,11 @@ public class FishBlockHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
     private void RotateBlock()
     {
         transform.Rotate(0f, 0f, -90f);
+        // ✅ 버튼 UI가 회전된 상태라면 다시 정방향으로 돌려줌
+        if (buttonUI != null)
+        {
+            buttonUI.transform.rotation = Quaternion.identity;
+        }
     }
 
     private void FlipBlock()
@@ -221,6 +226,11 @@ public class FishBlockHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
         Vector3 scale = transform.localScale;
         scale.x *= -1;
         transform.localScale = scale;
+
+        if (buttonUI != null)
+        {
+            buttonUI.transform.rotation = Quaternion.identity;
+        }
     }
 
     /// <summary>
